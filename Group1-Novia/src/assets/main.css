@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+/* @import './base.css';
+>>>>>>> 8095933eb0b8806bab3616198206a7e90866e0df
 
 /* Error toast */
 
@@ -121,8 +125,23 @@
   }
 }
 
+<<<<<<< HEAD
 .form-control:focus {
   border-color: #7F00FF !important;
   box-shadow: 0 0 0 0.15rem #E6E6FA !important;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+=======
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }
+} */
+>>>>>>> 8095933eb0b8806bab3616198206a7e90866e0df
