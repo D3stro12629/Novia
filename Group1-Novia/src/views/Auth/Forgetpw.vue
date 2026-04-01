@@ -33,7 +33,6 @@
           <span>{{ isLoading ? 'Sending...' : 'Send OTP Code' }}</span>
         </button>
       </form>
-
       <router-link to="/login" class="back-link">
         <i class="bi bi-arrow-left-short"></i>
         Back to Login
