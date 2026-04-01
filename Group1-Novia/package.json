@@ -10,16 +10,11 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.2.0",
+    "@lucide/vue": "^1.7.0",
     "axios": "^1.13.6",
     "bootstrap": "^5.3.8",
-<<<<<<< HEAD
-    "lucide": "^0.577.0",
-    "lucide-vue-next": "^0.577.0",
     "bootstrap-icons": "^1.13.1",
-
-=======
-    "bootstrap-icons": "^1.13.1",
->>>>>>> 024adc2f26af7ace16df5ae648fa7bc5123cd2f9
+    "lucide-vue-next": "^1.0.0",
     "pinia": "^3.0.4",
     "vue": "^3.5.29",
     "vue-router": "^5.0.3",

@@ -3,7 +3,6 @@ import { useAuthStores } from "@/stores/auth";
 import HomeView from "../views/HomeView.vue";
 import LoginView from "@/views/Auth/LoginView.vue";
 import RegisterView from "@/views/Auth/RegitsterView.vue";
-import LoginAdmin from "@/views/Auth/LoginAdmin.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,11 +21,6 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: LoginView,
-    },
-    {
-      path: "/loginAdmin",
-      name: "login",
-      component: LoginAdmin,
     },
     {
       path: "/register",
