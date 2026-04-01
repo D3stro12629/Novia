@@ -4,11 +4,7 @@
 
       <!-- Icon -->
       <div class="icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-          stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="4" width="20" height="16" rx="2" />
-          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-        </svg>
+      <i class="bi bi-envelope-open-heart" style="font-size: 30px;"></i>
       </div>
 
       <h1>Forgot Password?</h1>
@@ -16,13 +12,10 @@
 
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
-          <label for="email">Email Address</label>
+          <label for="email">   <i class="bi bi-envelope-open-heart" style="font-size: 20px; position: relative; padding:10px;" ></i>Email Address</label>
           <div class="input-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-              stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="4" width="20" height="16" rx="2" />
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-            </svg>
+       
+
             <input
               id="email"
               v-model="email"
@@ -42,10 +35,7 @@
       </form>
 
       <router-link to="/login" class="back-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
+        <i class="bi bi-arrow-left-short"></i>
         Back to Login
       </router-link>
 
