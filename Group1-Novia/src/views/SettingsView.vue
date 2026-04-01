@@ -434,7 +434,6 @@ const handleDeleteAccount = async () => {
     color: #f1f5f9;
     margin: 0;
 }
-
 .section-desc {
     color: #64748b;
     font-size: 0.875rem;
