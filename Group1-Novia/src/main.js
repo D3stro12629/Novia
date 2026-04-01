@@ -3,7 +3,7 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import ToastPlugin from 'vue-toast-notification'
-import 'vue-toast-notification/dist/theme-sugar.css' // ✅ toast styles
+import 'vue-toast-notification/dist/theme-sugar.css' 
 
 import App from './App.vue'
 import router from './router'
