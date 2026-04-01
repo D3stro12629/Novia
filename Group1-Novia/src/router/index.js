@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import { useAuthStores } from '../stores/auth'
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -27,6 +28,7 @@ const router = createRouter({
       component: () => import('../views/ForbiddenView.vue'),
     },
     {
+<<<<<<< HEAD
       path: '/',
       component: DashboardLayout,
       children: [
@@ -67,6 +69,28 @@ const router = createRouter({
     //   ],
     // },
 >>>>>>> 175be5bbba3490f7f77b669bf9f5d4aad3052223
+=======
+      path: "/register",
+      name: "register",
+      component: RegisterView,
+    },
+    {
+      path: "/forget-password",
+      name: "forget-password",
+      component: () => import("@/views/Auth/Forgetpw.vue"),
+    },
+    {
+      path: "/verify-otp",
+      name: "verify-otp",
+      component: () => import("@/views/Auth/VerifyOtp.vue"),
+    },
+    {
+      path: "/reset-password",
+      name: "reset-password",
+      component: () => import("@/views/Auth/ResetPassword.vue"),
+    },
+
+>>>>>>> 024adc2f26af7ace16df5ae648fa7bc5123cd2f9
   ],
 });
 

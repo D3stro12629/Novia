@@ -5,10 +5,9 @@
       <!-- Icon -->
       <div class="rp-icon-wrap">
         <div class="rp-icon-circle">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-           
-          </svg>
+          
+           <i class="bi bi-x-octagon"></i>
+       
         </div>
       </div>
 
@@ -22,7 +21,7 @@
         <div class="rp-input-wrap" :class="{ 'is-focused': focusPass, 'has-error': errors.new_pass }">
           <input
             v-model="new_pass"
-            :type="showPass ? 'text' : 'password'"
+            :type="showPass ? 'text' : 'text'"
             placeholder="Enter new password"
             :disabled="loading"
             class="rp-input"
@@ -61,7 +60,7 @@
         <div class="rp-input-wrap" :class="{ 'is-focused': focusConfirm, 'has-error': errors.new_pass_confirmation, 'is-match': matchOk }">
           <input
             v-model="new_pass_confirmation"
-            :type="showConfirm ? 'text' : 'password'"
+            :type="showConfirm ? 'text' : 'text'"
             placeholder="Re-enter new password"
             :disabled="loading"
             class="rp-input"
@@ -96,9 +95,7 @@
       <!-- Back Link -->
       <div class="rp-back">
         <router-link to="/verify-otp" class="rp-back-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"/>
-          </svg>
+        <i class="bi bi-arrow-left-short"></i>
           Back to verify OTP
         </router-link>
       </div>

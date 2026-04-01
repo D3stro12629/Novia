@@ -10,10 +10,14 @@ import router from './router'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+<<<<<<< HEAD
 import * as LucideIcons from "lucide-vue-next";
 
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
+=======
+ import 'bootstrap-icons/font/bootstrap-icons.css'
+>>>>>>> 024adc2f26af7ace16df5ae648fa7bc5123cd2f9
 const app = createApp(App)
 
 app.use(createPinia())

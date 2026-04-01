@@ -184,7 +184,7 @@ async function handleRegister() {
       password:              form.value.password,
       password_confirmation: form.value.confirmPassword,
     });
-    notifier.success("Register Successfully!", "/login");
+    notifier.success("Register Successfully!", "/");
 
   } catch (err) {
     console.log(err);
