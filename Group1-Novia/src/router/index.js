@@ -11,10 +11,62 @@ const router = createRouter({
       component: HomeView,
     },
     {
+<<<<<<< HEAD
       path: '/profile',
       name: 'profile',
       component: () => import('../views/ProfileView.vue'),
     },
+=======
+      path: '/settings',
+      name: 'settings',
+      component: () => import('../views/SettingsView.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('../views/ForbiddenView.vue'),
+    },
+    {
+      path: '/',
+      component: DashboardLayout,
+      children: [
+        {
+          path: '/settings',
+          component: () => import('../views/SettingsView.vue'),
+        }
+      ]
+    },  
+    //    {
+    //   path: "/",
+    //   component: DashboardLayout,
+    //   children: [
+    //     {
+    //       path: "",
+    //       name: "home",
+    //       component: HomeView,
+    //       // meta: {
+    //       //   title: "Dashboard",
+    //       // },
+    //     },
+    //     {
+    //       path: "category",
+    //       name: "category",
+    //       component: CategoryView,
+    //       // meta: {
+    //       //   title: "Category List",
+    //       // },
+    //     },
+    //     {
+    //       path: "profile",
+    //       name: "profile",
+    //       component: ProfileView,
+    //       // meta: {
+    //       //   title: "Profile View",
+    //       // },
+    //     },
+    //   ],
+    // },
+>>>>>>> 175be5bbba3490f7f77b669bf9f5d4aad3052223
   ],
 });
 

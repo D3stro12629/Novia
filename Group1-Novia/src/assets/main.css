@@ -1,5 +1,15 @@
+<<<<<<< HEAD
 .cursor-pointer {
   cursor: pointer;
+=======
+@import './base.css';
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  /* padding: 2rem; */
+  font-weight: normal;
+>>>>>>> 175be5bbba3490f7f77b669bf9f5d4aad3052223
 }
 
 .bg-btn {
@@ -118,8 +128,22 @@
   }
 }
 
+<<<<<<< HEAD
 .form-control:focus {
   border-color: #7F00FF !important;
   box-shadow: 0 0 0 0.15rem #E6E6FA !important;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+=======
+@media (min-width: 1280px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* padding: 0 2rem; */
+  }
+>>>>>>> 175be5bbba3490f7f77b669bf9f5d4aad3052223
 }

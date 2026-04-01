@@ -66,13 +66,13 @@ onUnmounted(() => {
 .dashboard-shell {
   width: 100%;
   min-height: 100vh;
-  background-color: #0f172a;
-  margin-left: 90px;
+  /* background-color: #0f172a; */
+  margin-left: 120px;
   /* Dark futuristic base */
-  background-image:
+  /* background-image:
     radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%);
+    radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%); */
   color: #e2e8f0;
 }
 
@@ -80,13 +80,13 @@ onUnmounted(() => {
   display: flex;
   position: relative;
   padding-top: 70px;
-  /* Navbar height */
   min-height: 100vh;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Main Content Area */
 .main-content {
+  /* width: 1000px; */
   flex: 1;
   margin-left: 200px;
   /* Match sidebar width exactly */
@@ -131,7 +131,7 @@ onUnmounted(() => {
 }
 
 /* Responsive */
-@media (max-width: 991px) {
+/* @media (max-width: 991px) {
   .main-content {
     margin-left: 0;
   }
@@ -139,5 +139,5 @@ onUnmounted(() => {
   .content-wrapper {
     padding: 1rem;
   }
-}
+} */
 </style>
