@@ -4,10 +4,9 @@
 
       <!-- Icon -->
       <div class="icon-wrap">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6z"/>
-          <path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10"/>
-        </svg>
+
+          <i class="bi bi-envelope-open-heart" style="font-size: 30px;"></i>
+        
       </div>
 
       <h1>Check your email</h1>
@@ -85,9 +84,7 @@
 
       <!-- Back -->
       <router-link to="/forget-password" class="back-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"/>
-        </svg>
+       
         Back to forgot password
       </router-link>
 
