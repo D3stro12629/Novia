@@ -66,20 +66,14 @@ onUnmounted(() => {
 .dashboard-shell {
   width: 100%;
   min-height: 100vh;
-  /* background-color: #0f172a; */
-  margin-left: 120px;
-  /* Dark futuristic base */
-  /* background-image:
-    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.1) 0px, transparent 50%); */
+  /* margin-left: 120px; */
   color: #e2e8f0;
 }
 
 .dashboard-body {
   display: flex;
   position: relative;
-  padding-top: 70px;
+  padding-top: 40px;  
   min-height: 100vh;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -101,7 +95,7 @@ onUnmounted(() => {
 }
 
 .content-wrapper {
-  padding: 2rem;
+  /* padding: 2rem; */
   max-width: 1200px;
   margin: 0 auto;
   min-height: calc(100vh - 70px);
