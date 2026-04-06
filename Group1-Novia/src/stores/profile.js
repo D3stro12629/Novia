@@ -9,11 +9,6 @@ export const useProfileStore = defineStore("profile", {
   }),
 
   actions: {
-    // ── GET  /api/profile ── Get profile detail ─────────────────────────
-    // response: { result, code, message, data: { id, full_name, dob, gender,
-    //   current_city, home_town, phone, email, avatar, cover, cv,
-    //   portfolio_link, created_at, roles[], types[], positions[],
-    //   professional, skills[], educations[], projects[], collaboration } }
     async getProfile() {
       this.loading = true
       this.error   = null
@@ -70,9 +65,6 @@ export const useProfileStore = defineStore("profile", {
       }
     },
 
-    // ── PUT  /api/profile/professional ── Update profile - professional ──
-    // payload: { job_title, company_name, responsibility }
-    // response: { result, code, message, data: { ...updated profile } }
     async updateProfessional(payload) {
       this.loading = true
       this.error   = null
@@ -90,9 +82,6 @@ export const useProfileStore = defineStore("profile", {
       }
     },
 
-    // ── POST /api/profile/avatar ── Update profile - avatar ─────────────
-    // payload: FormData { avatar: File }
-    // response: { result, code, message, data: { avatar: "url" } }
     async updateAvatar(file) {
       this.loading = true
       this.error   = null

@@ -7,15 +7,17 @@ import ProfileView from '../views/ProfileDetailsView.vue'
 import LoginView from '@/views/Auth/LoginView.vue'
 import RegisterView from '@/views/Auth/RegitsterView.vue'
 import ProfileDetailsView from '../views/ProfileDetailsView.vue'
-import Editprofileinfoview from '@/views/Editprofileinfoview.vue' 
-import Editeducationview from '../views/Editeducationview.vue'
-import Editprojectview from '@/views/Editprojectview.vue'  
+import Editprofileinfoview from '@/views/Editprofileinfoview.vue'
+import Editeducationview from '@/views/Editeducationview.vue'
+import Editprojectview from '@/views/Editprojectview.vue'
+import SettingsView from '@/views/SettingsView.vue'
+import Test from '../views/TestView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: HomeView,
     },
@@ -55,11 +57,16 @@ const router = createRouter({
       component: LandingView
     },
     {
+      path: '/test',
+      name: 'test',
+      component: Test,
+      meta: { require: true },
+    },
+    {
       path: '/profileDetail',
       name: 'profileDetail',
       component: ProfileDetailsView,
       meta: { require: true },
-
     },
     {
       path: '/editProfile',
@@ -77,6 +84,23 @@ const router = createRouter({
       path: '/editProject',
       name: 'editProject',
       component: () => import('@/views/Editprojectview.vue'),
+      meta: { require: true },
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('../views/ForbiddenView.vue'),
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('@/views/SettingsView.vue'),
+      meta: { require: true },
+    },
+    {
+      path: '/create-post',
+      name: 'CreatePost',
+      component: () => import('@/views/CreatePostView.vue'),
       meta: { require: true },
     }
   ],

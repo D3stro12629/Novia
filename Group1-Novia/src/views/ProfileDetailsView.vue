@@ -1,4 +1,6 @@
 <template>
+
+
 <div class="container">
   <div class="page-title-row">
     <div class="page-icon-wrap">
@@ -10,12 +12,8 @@
     </div>
   </div>
 
-  <!-- ════════════════════════════════
-       PROFILE HEADER CARD
-  ════════════════════════════════ -->
   <div class="pcard mb-4">
 
-    <!-- Cover -->
     <div
       class="cover"
       :style="profile.cover
@@ -135,9 +133,6 @@
   </div>
 
 
-  <!-- ════════════════════════════════
-       TAB: ALL POSTS
-  ════════════════════════════════ -->
   <div v-if="activeTab === 'posts'" class="tab-fade">
 
     <!-- New post button -->
@@ -252,9 +247,6 @@
   </div>
 
 
-  <!-- ════════════════════════════════
-       TAB: ABOUT (Professional)
-  ════════════════════════════════ -->
   <div v-if="activeTab === 'about'" class="info-panel tab-fade">
     <div class="panel-header">
       <h5 class="panel-title">Professional Info</h5>
@@ -316,9 +308,6 @@
   </div>
 
 
-  <!-- ════════════════════════════════
-       TAB: EDUCATION
-  ════════════════════════════════ -->
   <div v-if="activeTab === 'education'" class="info-panel tab-fade">
     <div class="panel-header">
       <h5 class="panel-title">Education</h5>
@@ -349,9 +338,6 @@
   </div>
 
 
-  <!-- ════════════════════════════════
-       TAB: PROJECTS
-  ════════════════════════════════ -->
   <div v-if="activeTab === 'project'" class="info-panel tab-fade">
     <div class="panel-header">
       <h5 class="panel-title">Projects</h5>
@@ -388,9 +374,6 @@
   </div>
 
 
-  <!-- ════════════════════════════════
-       TAB: SKILLS
-  ════════════════════════════════ -->
   <div v-if="activeTab === 'skills'" class="info-panel tab-fade">
     <div class="panel-header">
       <h5 class="panel-title">Skills</h5>
@@ -418,9 +401,6 @@
 </template>
 
 
-<!-- ══════════════════════════════════════════════════════════
-     SCRIPT
-══════════════════════════════════════════════════════════ -->
 <script setup>
 import { ref, onMounted } from "vue"
 import {
@@ -455,10 +435,8 @@ const tabs = [
   { key: "skills",    label: "Skills",     icon: Code2       },
 ]
 
-// ── Lifecycle ──────────────────────────────────────────────
 onMounted(() => Promise.all([loadProfile(), loadPosts()]))
 
-// ── Load profile ───────────────────────────────────────────
 async function loadProfile() {
   try {
     // Uses auth store (existing) OR profileStore.getProfile()
