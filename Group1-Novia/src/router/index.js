@@ -13,20 +13,14 @@ const router = createRouter({
       component: HomeView,
     },
     {
-<<<<<<< HEAD
-      path: '/profile',
-      name: 'profile',
-      component: () => import('../views/ProfileView.vue'),
-    },
-    {
-      path: '/settings',
-      name: 'settings',
-      component: () => import('../views/SettingsView.vue'),
-    },
-=======
       path: "/about",
       name: "about",
       component: () => import("../views/AboutView.vue"),
+    },
+    {
+      path: "/settings",
+      name: "settings",
+      component: () => import("../views/SettingsView.vue"),
     },
     {
       path: "/login",
@@ -54,7 +48,6 @@ const router = createRouter({
       component: () => import("@/views/Auth/ResetPassword.vue"),
     },
 
->>>>>>> ee37bc9a0fa00dfffcd3ccb1d9f0dde0436698ee
   ],
 });
 

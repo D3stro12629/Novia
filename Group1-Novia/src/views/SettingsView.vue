@@ -1,35 +1,12 @@
 <script setup>
-import { ref, reactive, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { reactive, ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import DashboardLayout from '@/layouts/DashboardLayout.vue'
 
-const router = useRouter();
+const router = useRouter()
+const BASE_URL = 'https://novia2.csm.linkpc.net'
 
-// --- API Configuration ---
-const BASE_URL = 'https://novia2.csm.linkpc.net';
-
-/**
- * Reusable fetch wrapper for API calls
- */
-async function apiRequest(endpoint, options = {}) {
-    const response = await fetch(`${BASE_URL}${endpoint}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            // 'Authorization': `Bearer ${localStorage.getItem('token')}` // Add if your API requires auth
-        },
-        ...options,
-    });
-
-    const data = await response.json().catch(() => ({}));
-
-    if (!response.ok) {
-        throw new Error(data.message || `Error: ${response.status}`);
-    }
-
-    return data;
-}
-
-// --- State Management ---
+// --- Password Change State ---
 const passwordForm = reactive({
     current_password: '',
     new_password: '',
@@ -58,23 +35,54 @@ const handleChangePassword = async () => {
         return;
     }
 
-    status.loading = true;
-    status.error = null;
-    status.success = null;
+    if (!passwordForm.new) {
+        errors.new = 'New password is required'
+        valid = false
+    } else if (passwordForm.new.length < 6) {
+        errors.new = 'Password must be at least 6 characters'
+        valid = false
+    }
+
+    if (!passwordForm.confirm) {
+        errors.confirm = 'Please confirm your password'
+        valid = false
+    } else if (passwordForm.new !== passwordForm.confirm) {
+        errors.confirm = 'Passwords do not match'
+        valid = false
+    }
+
+    return valid
+}
+
+const handlePasswordChange = async () => {
+    if (!validatePassword()) return
+
+    isLoading.value = true
+    successMessage.value = ''
+    errors.current = '' 
 
     try {
-        await apiRequest('/api/profile/change-pass', {
+        const response = await fetch(`${BASE_URL}/api/profile/change-pass`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             body: JSON.stringify({
                 current_password: passwordForm.current_password,
                 new_password: passwordForm.new_password,
             }),
         });
 
-        status.success = "Password updated successfully!";
+        const data = await response.json().catch(() => ({}))
 
-        // Reset Form
-        passwordForm.current_password = '';
-        passwordForm.new_password = '';
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to update password')
+        }
+        successMessage.value = 'Password updated successfully!'
+        passwordForm.current = ''
+        passwordForm.new = ''
+        passwordForm.confirm = ''
 
     } catch (err) {
         status.error = err.message;
@@ -97,16 +105,32 @@ const handleDeleteAccount = async () => {
     status.error = null;
 
     try {
-        await apiRequest('/api/profile/delete-acc');
+        const response = await fetch(`${BASE_URL}/api/profile/delete-acc`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
 
-        // Success: Clear session/token if necessary
-        // localStorage.removeItem('token'); 
+        const data = await response.json().catch(() => ({}))
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to delete account')
+        }
+
+        // Success - Clear local storage if you have a token
+        localStorage.clear() 
+        
+        // Redirect to login
+        router.push('/login')
 
         alert("Account deleted successfully.");
         router.push('/login');
     } catch (err) {
-        status.error = err.message;
-        status.deleting = false;
+        deleteError.value = err.message
+    } finally {
+        isDeleting.value = false
     }
 };
 </script>
