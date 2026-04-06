@@ -92,7 +92,7 @@ async function handleSubmit() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #2d0060, #6a0dad, #9b30ff);
+  background: linear-gradient(135deg, #432564, #6a0dad, #833cc5);
   background-attachment: fixed;
   background-size: cover;
   padding: 2rem 1rem;
@@ -100,7 +100,7 @@ async function handleSubmit() {
 }
 
 .forgot-card {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(253, 246, 246, 0.123);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 20px;

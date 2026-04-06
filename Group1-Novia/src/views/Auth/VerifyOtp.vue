@@ -5,7 +5,7 @@
       <!-- Icon -->
       <div class="icon-wrap">
 
-          <i class="bi bi-envelope-open-heart" style="font-size: 30px;"></i>
+          <i class="bi bi-envelope-open-heart" style="font-size: 30px; color: aliceblue;"></i>
         
       </div>
 
