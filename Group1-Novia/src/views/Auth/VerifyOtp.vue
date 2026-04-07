@@ -5,8 +5,8 @@
       <!-- Icon -->
       <div class="icon-wrap">
 
-          <i class="bi bi-envelope-open-heart" style="font-size: 30px;"></i>
-        
+        <i class="bi bi-envelope-open-heart" style="font-size: 30px;"></i>
+
       </div>
 
       <h1>Check your email</h1>
@@ -15,51 +15,37 @@
 
       <!-- OTP Boxes -->
       <div class="otp-row">
-        <input
-          v-for="(digit, index) in otpDigits"
-          :key="index"
-          :ref="el => { if (el) otpRefs[index] = el }"
-          v-model="otpDigits[index]"
-          type="text"
-          maxlength="1"
-          autocomplete="off"
-          :disabled="isLoading"
-          :class="['otp-box', { 'otp-box--filled': digit, 'otp-box--error': otpError }]"
-          @input="onInput(index)"
-          @keydown="onKeydown($event, index)"
-          @paste="onPaste($event)"
-        />
+        <input v-for="(digit, index) in otpDigits" :key="index" :ref="el => { if (el) otpRefs[index] = el }"
+          v-model="otpDigits[index]" type="text" maxlength="1" autocomplete="off" :disabled="isLoading"
+          :class="['otp-box', { 'otp-box--filled': digit, 'otp-box--error': otpError }]" @input="onInput(index)"
+          @keydown="onKeydown($event, index)" @paste="onPaste($event)" />
       </div>
 
       <!-- Progress dots -->
       <div class="progress-dots">
-        <div
-          v-for="(d, i) in otpDigits"
-          :key="i"
-          class="dot"
-          :class="{ 'dot--filled': d }"
-        />
+        <div v-for="(d, i) in otpDigits" :key="i" class="dot" :class="{ 'dot--filled': d }" />
       </div>
 
       <!-- Error -->
       <div v-if="otpError" class="error-box">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
-          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
         </svg>
         <span>{{ otpError }}</span>
       </div>
 
       <!-- Submit Button -->
-      <button
-        :disabled="isLoading || otpValue.length < 6"
-        class="btn-submit"
-        :class="{ 'btn-submit--active': otpValue.length === 6 && !isLoading }"
-        @click="handleSubmit"
-      >
+      <button :disabled="isLoading || otpValue.length < 6" class="btn-submit"
+        :class="{ 'btn-submit--active': otpValue.length === 6 && !isLoading }" @click="handleSubmit">
         <span v-if="isLoading" class="spinner"></span>
         <span>{{ isLoading ? 'Verifying...' : 'Verify Code' }}</span>
-        <svg v-if="!isLoading" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+        <svg v-if="!isLoading" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14" />
+          <path d="m12 5 7 7-7 7" />
         </svg>
       </button>
 
@@ -73,18 +59,14 @@
       <!-- Resend -->
       <p class="resend-text">
         Didn't get the code?
-        <span
-          @click="handleResend"
-          class="resend-link"
-          :class="{ 'resend-link--disabled': resendCooldown > 0 }"
-        >
+        <span @click="handleResend" class="resend-link" :class="{ 'resend-link--disabled': resendCooldown > 0 }">
           {{ resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend code' }}
         </span>
       </p>
 
       <!-- Back -->
       <router-link to="/forget-password" class="back-link">
-       
+
         Back to forgot password
       </router-link>
 
@@ -98,16 +80,16 @@ import { notify } from '@/utils/toast'
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-const router   = useRouter()
-const route    = useRoute()
+const router = useRouter()
+const route = useRoute()
 const notifier = notify(router)
-const auth     = useAuthStores()
+const auth = useAuthStores()
 
-const email          = computed(() => route.query.email || '')
-const otpDigits      = ref(['', '', '', '', '', ''])
-const otpRefs        = ref([])
-const otpError       = ref('')
-const isLoading      = ref(false)
+const email = computed(() => route.query.email || '')
+const otpDigits = ref(['', '', '', '', '', ''])
+const otpRefs = ref([])
+const otpError = ref('')
+const isLoading = ref(false)
 const resendCooldown = ref(0)
 let timer = null
 
@@ -221,8 +203,15 @@ async function handleResend() {
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ── Icon ── */
@@ -377,7 +366,9 @@ h1 {
   background: linear-gradient(135deg, #a94dff, #d18bff);
 }
 
-.btn-submit--active:active { transform: scale(0.98); }
+.btn-submit--active:active {
+  transform: scale(0.98);
+}
 
 /* ── Spinner ── */
 .spinner {
@@ -389,7 +380,12 @@ h1 {
   animation: spin 0.65s linear infinite;
   flex-shrink: 0;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* ── Divider ── */
 .divider {
@@ -398,8 +394,17 @@ h1 {
   gap: 12px;
   margin-bottom: 1.25rem;
 }
-.line { flex: 1; height: 1px; background: rgba(255, 255, 255, 0.15); }
-.divider-text { font-size: 12px; color: rgba(255, 255, 255, 0.4); }
+
+.line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.divider-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+}
 
 /* ── Resend ── */
 .resend-text {
@@ -417,7 +422,10 @@ h1 {
   text-underline-offset: 3px;
   transition: color 0.15s;
 }
-.resend-link:hover { color: #ffffff; }
+
+.resend-link:hover {
+  color: #ffffff;
+}
 
 .resend-link--disabled {
   color: rgba(255, 255, 255, 0.3);
@@ -435,5 +443,8 @@ h1 {
   text-decoration: none;
   transition: color 0.15s;
 }
-.back-link:hover { color: #ffffff; }
+
+.back-link:hover {
+  color: #ffffff;
+}
 </style>

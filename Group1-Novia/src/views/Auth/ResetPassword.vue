@@ -5,9 +5,9 @@
       <!-- Icon -->
       <div class="rp-icon-wrap">
         <div class="rp-icon-circle">
-          
-           <i class="bi bi-x-octagon"></i>
-       
+
+          <i class="bi bi-x-octagon"></i>
+
         </div>
       </div>
 
@@ -19,23 +19,19 @@
       <div class="rp-field">
         <label class="rp-label">New password</label>
         <div class="rp-input-wrap" :class="{ 'is-focused': focusPass, 'has-error': errors.new_pass }">
-          <input
-            v-model="new_pass"
-            :type="showPass ? 'text' : 'text'"
-            placeholder="Enter new password"
-            :disabled="loading"
-            class="rp-input"
-            @focus="focusPass = true"
-            @blur="focusPass = false"
-          />
+          <input v-model="new_pass" :type="showPass ? 'text' : 'text'" placeholder="Enter new password"
+            :disabled="loading" class="rp-input" @focus="focusPass = true" @blur="focusPass = false" />
           <button type="button" class="rp-eye" @click="showPass = !showPass" tabindex="-1">
-            <svg v-if="!showPass" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+            <svg v-if="!showPass" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
             </svg>
-            <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
-              <line x1="1" y1="1" x2="23" y2="23"/>
+            <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+              <line x1="1" y1="1" x2="23" y2="23" />
             </svg>
           </button>
         </div>
@@ -57,29 +53,28 @@
       <!-- Confirm Password -->
       <div class="rp-field">
         <label class="rp-label">Confirm password</label>
-        <div class="rp-input-wrap" :class="{ 'is-focused': focusConfirm, 'has-error': errors.new_pass_confirmation, 'is-match': matchOk }">
-          <input
-            v-model="new_pass_confirmation"
-            :type="showConfirm ? 'text' : 'text'"
-            placeholder="Re-enter new password"
-            :disabled="loading"
-            class="rp-input"
-            @focus="focusConfirm = true"
-            @blur="focusConfirm = false"
-          />
+        <div class="rp-input-wrap"
+          :class="{ 'is-focused': focusConfirm, 'has-error': errors.new_pass_confirmation, 'is-match': matchOk }">
+          <input v-model="new_pass_confirmation" :type="showConfirm ? 'text' : 'text'"
+            placeholder="Re-enter new password" :disabled="loading" class="rp-input" @focus="focusConfirm = true"
+            @blur="focusConfirm = false" />
           <span v-if="matchOk" class="rp-check">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"/>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12" />
             </svg>
           </span>
           <button v-else type="button" class="rp-eye" @click="showConfirm = !showConfirm" tabindex="-1">
-            <svg v-if="!showConfirm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+            <svg v-if="!showConfirm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
             </svg>
-            <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
-              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
-              <line x1="1" y1="1" x2="23" y2="23"/>
+            <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+              <line x1="1" y1="1" x2="23" y2="23" />
             </svg>
           </button>
         </div>
@@ -95,7 +90,7 @@
       <!-- Back Link -->
       <div class="rp-back">
         <router-link to="/verify-otp" class="rp-back-link">
-        <i class="bi bi-arrow-left-short"></i>
+          <i class="bi bi-arrow-left-short"></i>
           Back to verify OTP
         </router-link>
       </div>
@@ -111,30 +106,30 @@ import api from '@/api/http'
 import { notify } from '@/utils/toast'
 
 const router = useRouter()
-const route  = useRoute()
-const toast  = notify(router)
+const route = useRoute()
+const toast = notify(router)
 
 const email = computed(() => route.query.email || '')
-const otp   = computed(() => route.query.otp   || '')
+const otp = computed(() => route.query.otp || '')
 
-const new_pass              = ref('')
+const new_pass = ref('')
 const new_pass_confirmation = ref('')
-const showPass              = ref(false)
-const showConfirm           = ref(false)
-const focusPass             = ref(false)
-const focusConfirm          = ref(false)
-const loading               = ref(false)
-const errors                = ref({ new_pass: '', new_pass_confirmation: '' })
+const showPass = ref(false)
+const showConfirm = ref(false)
+const focusPass = ref(false)
+const focusConfirm = ref(false)
+const loading = ref(false)
+const errors = ref({ new_pass: '', new_pass_confirmation: '' })
 
 // Password strength score (1–4)
 const strength = computed(() => {
   const p = new_pass.value
   if (!p) return 0
   let score = 0
-  if (p.length >= 8)             score++
-  if (/[A-Z]/.test(p))          score++
-  if (/[0-9]/.test(p))          score++
-  if (/[^A-Za-z0-9]/.test(p))  score++
+  if (p.length >= 8) score++
+  if (/[A-Z]/.test(p)) score++
+  if (/[0-9]/.test(p)) score++
+  if (/[^A-Za-z0-9]/.test(p)) score++
   return score
 })
 
@@ -186,9 +181,9 @@ async function handleSubmit() {
   loading.value = true
   try {
     const formData = new FormData()
-    formData.append('email',                 email.value)
-    formData.append('otp',                   otp.value)
-    formData.append('new_pass',              new_pass.value)
+    formData.append('email', email.value)
+    formData.append('otp', otp.value)
+    formData.append('new_pass', new_pass.value)
     formData.append('new_pass_confirmation', new_pass_confirmation.value)
 
     const res = await api.post('/api/reset/pass', formData, {
@@ -319,8 +314,14 @@ async function handleSubmit() {
   font-family: inherit;
 }
 
-.rp-input::placeholder { color: #d1d5db; }
-.rp-input:disabled { opacity: 0.5; cursor: not-allowed; }
+.rp-input::placeholder {
+  color: #d1d5db;
+}
+
+.rp-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 /* ─── Eye / check ─── */
 .rp-eye {
@@ -335,7 +336,9 @@ async function handleSubmit() {
   transition: color 0.15s;
 }
 
-.rp-eye:hover { color: #6366f1; }
+.rp-eye:hover {
+  color: #6366f1;
+}
 
 .rp-check {
   display: flex;
@@ -367,10 +370,21 @@ async function handleSubmit() {
   transition: background 0.3s;
 }
 
-.rp-bar.active-weak   { background: #f87171; }
-.rp-bar.active-fair   { background: #fb923c; }
-.rp-bar.active-good   { background: #facc15; }
-.rp-bar.active-strong { background: #34d399; }
+.rp-bar.active-weak {
+  background: #f87171;
+}
+
+.rp-bar.active-fair {
+  background: #fb923c;
+}
+
+.rp-bar.active-good {
+  background: #facc15;
+}
+
+.rp-bar.active-strong {
+  background: #34d399;
+}
 
 .rp-strength-label {
   font-size: 12px;
@@ -380,10 +394,21 @@ async function handleSubmit() {
   text-transform: capitalize;
 }
 
-.label-weak   { color: #f87171; }
-.label-fair   { color: #fb923c; }
-.label-good   { color: #ca8a04; }
-.label-strong { color: #10b981; }
+.label-weak {
+  color: #f87171;
+}
+
+.label-fair {
+  color: #fb923c;
+}
+
+.label-good {
+  color: #ca8a04;
+}
+
+.label-strong {
+  color: #10b981;
+}
 
 /* ─── Error ─── */
 .rp-error {
@@ -421,7 +446,9 @@ async function handleSubmit() {
   box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
 }
 
-.rp-btn:active:not(:disabled) { transform: scale(0.98); }
+.rp-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
 
 .rp-btn:disabled {
   opacity: 0.55;
@@ -441,7 +468,9 @@ async function handleSubmit() {
 }
 
 /* ─── Back ─── */
-.rp-back { text-align: center; }
+.rp-back {
+  text-align: center;
+}
 
 .rp-back-link {
   display: inline-flex;
@@ -453,15 +482,26 @@ async function handleSubmit() {
   transition: color 0.15s;
 }
 
-.rp-back-link:hover { color: #6366f1; }
+.rp-back-link:hover {
+  color: #6366f1;
+}
 
 /* ─── Animations ─── */
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px) scale(0.98); }
-  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

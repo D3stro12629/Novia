@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* @import './base.css'; */
 
 /* #app {
@@ -6,3 +7,10 @@
   padding: 2rem;
   font-weight: normal;
 } */
+=======
+::-webkit-validation-bubble-heading {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+>>>>>>> abacc3810949a54aba0d390283fea1f3306f75d2

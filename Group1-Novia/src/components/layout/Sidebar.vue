@@ -18,7 +18,7 @@
           <span class="nav-label">Main Menu</span>
           <ul>
             <li v-for="(item, index) in menuItems" :key="index">
-              <router-link to="/settings" class="nav-link" :class="{ active: activeItem === index }"
+              <router-link to="/home" class="nav-link" :class="{ active: activeItem === index }"
                 @click="setActive(index)">
                 <span class="link-icon">
                   <i :class="['bi', item.icon]"></i>

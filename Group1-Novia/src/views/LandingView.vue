@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Navbar -->
     <nav class="navbar border-bottom">
       <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
@@ -11,7 +10,7 @@
           <router-link to="/login" class="nav-link text-dark">
             Sign In
           </router-link>
-          <router-link to="/register" class="btn bg-btn text-light">
+          <router-link to="/register" class="btn text-light" style="background-color: #7F00FF;">
             Join Now
           </router-link>
         </div>

@@ -30,8 +30,7 @@
                     <i class="bi bi-lock"></i> Password
                   </label>
                   <div class="input-group position-relative">
-                    <input v-model="password" :type="passwordType"
-                      class="form-control custom-input pe-5 rounded-3"
+                    <input v-model="password" :type="passwordType" class="form-control custom-input pe-5 rounded-3"
                       placeholder="Enter your password" />
                     <span class="password-eye" @click="togglePassword">
                       <i :class="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
@@ -87,14 +86,14 @@ import { notify } from '@/utils/toast'
 import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const router   = useRouter()
+const router = useRouter()
 const notifier = notify(router)
 
 let email_or_phone = ref('')
-let password       = ref('')
-let rememberMe     = ref(false)
-let isLoading      = ref(false)
-let showPassword   = ref(false)
+let password = ref('')
+let rememberMe = ref(false)
+let isLoading = ref(false)
+let showPassword = ref(false)
 
 let auth = useAuthStores()
 
@@ -108,7 +107,7 @@ const togglePassword = () => { showPassword.value = !showPassword.value }
 
 function validator() {
   err.email_or_phone = !email_or_phone.value.trim() ? 'Email or phone number is required.' : ''
-  err.password       = !password.value.trim()       ? 'Password is required.'              : ''
+  err.password = !password.value.trim() ? 'Password is required.' : ''
   return !err.email_or_phone && !err.password
 }
 
@@ -116,7 +115,7 @@ async function handleLogin() {
   if (!validator()) return
   isLoading.value = true
   try {
-    await auth.Login(email_or_phone.value, password.value)
+    await auth.login(email_or_phone.value, password.value)
     notifier.success('Login Successfully!', '/')
   } catch {
     notifier.error('Email or password incorrect')
@@ -144,8 +143,15 @@ async function handleLogin() {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(25px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .card-title {
@@ -198,7 +204,9 @@ async function handleLogin() {
   transition: color 0.2s;
 }
 
-.password-eye:hover { color: #ffffff; }
+.password-eye:hover {
+  color: #ffffff;
+}
 
 .field-error {
   font-size: 0.75rem;
@@ -228,7 +236,9 @@ async function handleLogin() {
   transition: color 0.2s;
 }
 
-.forgot-link:hover { color: #ffffff; }
+.forgot-link:hover {
+  color: #ffffff;
+}
 
 .login-btn {
   background: linear-gradient(135deg, #9b30ff, #c77dff);

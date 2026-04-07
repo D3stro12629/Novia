@@ -10,8 +10,7 @@
         <div class="field-group">
           <div class="field-wrap" :class="{ error: errors.full_name }">
             <i class="bi bi-person-fill"></i>
-            <input v-model="form.full_name" type="text"
-              placeholder="Full Name" autocomplete="name" />
+            <input v-model="form.full_name" type="text" placeholder="Full Name" autocomplete="name" />
           </div>
           <p v-if="errors.full_name" class="field-error">{{ errors.full_name }}</p>
         </div>
@@ -20,8 +19,7 @@
         <div class="field-group">
           <div class="field-wrap" :class="{ error: errors.email }">
             <i class="bi bi-envelope-fill"></i>
-            <input v-model="form.email" type="text"
-              placeholder="Email" autocomplete="email" />
+            <input v-model="form.email" type="text" placeholder="Email" autocomplete="email" />
           </div>
           <p v-if="errors.email" class="field-error">{{ errors.email }}</p>
         </div>
@@ -30,8 +28,7 @@
         <div class="field-group">
           <div class="field-wrap" :class="{ error: errors.phone }">
             <i class="bi bi-telephone-fill"></i>
-            <input v-model="form.phone" type="text"
-              placeholder="Phone Number" autocomplete="tel" />
+            <input v-model="form.phone" type="text" placeholder="Phone Number" autocomplete="tel" />
           </div>
           <p v-if="errors.phone" class="field-error">{{ errors.phone }}</p>
         </div>
@@ -40,8 +37,7 @@
         <div class="field-group">
           <div class="field-wrap" :class="{ error: errors.password }">
             <i class="bi bi-lock-fill"></i>
-            <input v-model="form.password"
-              :type="showPassword ? 'text' : 'password'"
+            <input v-model="form.password" :type="showPassword ? 'text' : 'password'"
               placeholder="Password (min 4 characters)" autocomplete="new-password" />
             <span class="eye-btn" @click="togglePassword">
               <i :class="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
@@ -54,8 +50,7 @@
         <div class="field-group">
           <div class="field-wrap" :class="{ error: errors.confirmPassword }">
             <i class="bi bi-lock-fill"></i>
-            <input v-model="form.confirmPassword"
-              :type="showConfirmPassword ? 'text' : 'password'"
+            <input v-model="form.confirmPassword" :type="showConfirmPassword ? 'text' : 'password'"
               placeholder="Confirm Password" autocomplete="new-password" />
             <span class="eye-btn" @click="toggleConfirmPassword">
               <i :class="showConfirmPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
@@ -101,37 +96,38 @@
 </template>
 
 <script setup>
-import { useAuthStores } from "@/stores/auth";
-import { notify } from "@/utils/toast";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useAuthStores } from "@/stores/auth";
+import { notify } from "@/utils/toast";
 
-const router   = useRouter();
+const router = useRouter();
 const notifier = notify(router);
-const auth     = useAuthStores();
+const auth = useAuthStores();
 
-// ─── State ────────────────────────────────────────────────────────────────────
-const isLoading           = ref(false);
-const rememberMe          = ref(false);
-const showPassword        = ref(false);
+// UI state
+const isLoading = ref(false);
+const rememberMe = ref(false);
+const showPassword = ref(false);
 const showConfirmPassword = ref(false);
-let error = ref('');
 
+// Form fields
 const form = ref({
-  full_name:       "",
-  email:           "",
-  phone:           "",
-  password:        "",
+  full_name: "",
+  email: "",
+  phone: "",
+  password: "",
   confirmPassword: "",
 });
 
 const errors = ref({});
 
-// ─── Toggle Password ──────────────────────────────────────────────────────────
-const togglePassword        = () => { showPassword.value        = !showPassword.value; };
-const toggleConfirmPassword = () => { showConfirmPassword.value = !showConfirmPassword.value; };
+// Toggle password fields
+const togglePassword = () => (showPassword.value = !showPassword.value);
+const toggleConfirmPassword = () =>
+  (showConfirmPassword.value = !showConfirmPassword.value);
 
-// ─── Validator ────────────────────────────────────────────────────────────────
+// Validate form
 function validateForm() {
   errors.value = {};
 
@@ -145,14 +141,14 @@ function validateForm() {
   if (!form.value.email.trim()) {
     errors.value.email = "Email is required.";
   } else if (!emailRegex.test(form.value.email.trim())) {
-    errors.value.email = "Please enter a valid email (e.g. name@gmail.com).";
+    errors.value.email = "Please enter a valid email.";
   }
 
   const phoneRegex = /^[0-9]{9,15}$/;
   if (!form.value.phone.trim()) {
     errors.value.phone = "Phone number is required.";
   } else if (!phoneRegex.test(form.value.phone.trim())) {
-    errors.value.phone = "Phone must be 9–15 digits only.";
+    errors.value.phone = "Phone must be 9–15 digits.";
   }
 
   if (!form.value.password.trim()) {
@@ -170,40 +166,58 @@ function validateForm() {
   return Object.keys(errors.value).length === 0;
 }
 
-// ─── Handle Register ──────────────────────────────────────────────────────────
+// Submit register form
 async function handleRegister() {
   if (!validateForm()) return;
 
   isLoading.value = true;
 
   try {
-    await auth.Register({
-      full_name:             form.value.full_name.trim(),
-      email:                 form.value.email.trim(),
-      phone:                 form.value.phone.trim(),
-      password:              form.value.password,
+    await auth.register({
+      full_name: form.value.full_name.trim(),
+      email: form.value.email.trim(),
+      phone: form.value.phone.trim(),
+      password: form.value.password,
       password_confirmation: form.value.confirmPassword,
     });
-    notifier.success("Register Successfully!", "/");
+
+    notifier.success("Register Successfully!", "/login");
 
   } catch (err) {
-    console.log(err);
-    if (err.errors?.email) {
-      error.value = err.errors.email[0];
-    } else if (err.errors?.phone) {
-      error.value = err.errors.phone[0];
-    }
-    notifier.error(error.value);
+    const backendError =
+      err?.errors?.email?.[0] ||
+      err?.errors?.phone?.[0] ||
+      "Registration failed.";
+
+    notifier.error(backendError);
+
   } finally {
     isLoading.value = false;
   }
 }
 </script>
 
+<style>
+/* Global (must be outside scoped) */
+html,
+body,
+#app {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 .register-box {
   width: 100%;
@@ -216,16 +230,6 @@ async function handleRegister() {
   background-size: cover;
   font-family: "Poppins", sans-serif;
   padding: 2rem 1rem;
-}
-
-/* Ensure html and body don't clip the background */
-:global(html),
-:global(body),
-:global(#app) {
-  min-height: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
 }
 
 .register-card {
@@ -241,8 +245,15 @@ async function handleRegister() {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(25px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .title {
@@ -259,7 +270,9 @@ async function handleRegister() {
   margin-bottom: 1.5rem;
 }
 
-.field-group { margin-bottom: 1rem; }
+.field-group {
+  margin-bottom: 1rem;
+}
 
 .field-wrap {
   display: flex;
@@ -272,7 +285,10 @@ async function handleRegister() {
   transition: 0.3s;
 }
 
-.field-wrap i { color: #ffffff; font-size: 0.9rem; }
+.field-wrap i {
+  color: #ffffff;
+  font-size: 0.9rem;
+}
 
 .field-wrap input {
   flex: 1;
@@ -285,7 +301,9 @@ async function handleRegister() {
   font-family: "Poppins", sans-serif;
 }
 
-.field-wrap input::placeholder { color: rgba(255, 255, 255, 0.5); }
+.field-wrap input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
 
 .field-wrap:focus-within {
   border: 1px solid rgba(200, 150, 255, 0.8);
@@ -293,7 +311,9 @@ async function handleRegister() {
   box-shadow: 0 0 0 3px rgba(155, 48, 255, 0.2);
 }
 
-.field-wrap.error { border: 1px solid #ff6b6b; }
+.field-wrap.error {
+  border: 1px solid #ff6b6b;
+}
 
 .field-error {
   font-size: 0.75rem;
@@ -302,8 +322,14 @@ async function handleRegister() {
   padding-left: 4px;
 }
 
-.eye-btn { cursor: pointer; color: rgba(255, 255, 255, 0.8); }
-.eye-btn:hover { color: #ffffff; }
+.eye-btn {
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.eye-btn:hover {
+  color: #ffffff;
+}
 
 .submit-btn {
   width: 100%;
@@ -314,7 +340,6 @@ async function handleRegister() {
   color: #ffffff;
   font-weight: 600;
   font-size: 0.95rem;
-  font-family: "Poppins", sans-serif;
   cursor: pointer;
   transition: 0.3s;
   margin-top: 0.5rem;
@@ -328,7 +353,12 @@ async function handleRegister() {
   background: linear-gradient(135deg, #a94dff, #d18bff);
 }
 
-.submit-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+.submit-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
 
 .row-links {
   display: flex;
@@ -370,7 +400,9 @@ async function handleRegister() {
   transition: color 0.2s;
 }
 
-.forgot-link:hover { color: #ffffff; }
+.forgot-link:hover {
+  color: #ffffff;
+}
 
 .divider {
   display: flex;
@@ -378,7 +410,11 @@ async function handleRegister() {
   margin: 1.2rem 0;
 }
 
-.line { flex: 1; height: 1px; background: rgba(255, 255, 255, 0.2); }
+.line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
 
 .divider-text {
   padding: 0 10px;
