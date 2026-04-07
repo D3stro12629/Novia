@@ -1,18 +1,12 @@
-<script setup>
-import { RouterLink } from 'vue-router'
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
-
 <template>
-  <main>
-    <TheWelcome />
-
-    <p class="home-nav">
-      <RouterLink to="/about">About</RouterLink> |
-      <RouterLink to="/contact">Contact</RouterLink> |
-      <RouterLink to="/help">Help</RouterLink>
-    </p>
-  </main>
+    <div class="d-flex">
+        <div class="flex-grow-1">
+            <div class="p-4">
+                <h1>Dashboard</h1>
+                <p>Welcome to the Article Dashboard! Here you can manage your articles, categories, and settings.</p>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style scoped>
