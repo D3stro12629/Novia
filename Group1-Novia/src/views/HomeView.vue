@@ -4,7 +4,7 @@ import { usePostStore } from '../stores/post';
 import { computed, onMounted } from 'vue';
 import State from '../components/State.vue';
 import DashboardLayout from '../layouts/DashboardLayout.vue';
-import CreatePostView from '../views/CreatePostView.vue'; // <-- ADD THIS
+import CreatePostView from '../views/CreatePostView.vue'; 
 
 interface Post {
     id: number;

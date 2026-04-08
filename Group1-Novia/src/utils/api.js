@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // Configure axios defaults
-axios.defaults.baseURL = 'http://novia2.csm.linkpc.net/api'
+axios.defaults.baseURL = 'https://novia2.csm.linkpc.net/api'
 axios.defaults.headers.common['Accept'] = 'application/json'
 
 // Request interceptor to add token
