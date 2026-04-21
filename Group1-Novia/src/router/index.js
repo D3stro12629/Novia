@@ -18,6 +18,7 @@ const router = createRouter({
     { path: '/contact', name: 'contact', component: () => import('@/views/ContactView.vue'), meta: { require: true } },
     { path: '/about', name: 'about', component: () => import('@/views/AboutView.vue'), meta: { require: true } },
     { path: '/help', name: 'help', component: () => import('@/views/HelpView.vue'), meta: { require: true } },
+    { path: '/chatview', name: 'ChatView', component: () => import('@/views/ChatView.vue'), meta: { require: true } },
 
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('../views/ForbiddenView.vue') },
   ],
