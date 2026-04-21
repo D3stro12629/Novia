@@ -1,5 +1,5 @@
 <template>
-    <nav class="novia-navbar">
+    <nav class="novia-navbar bg-dark">
         <div class="navbar-container">
             <!-- Left: Toggle + Brand -->
             <div class="navbar-section left">
@@ -26,11 +26,11 @@
             <!-- Right: Actions -->
             <div class="navbar-section right">
                 <div class="nav-actions">
-                    <router-link to="/home" class="action-btn d-none d-lg-flex">
+                    <router-link to="/settings" class="action-btn d-none d-lg-flex">
                         <i class="bi bi-house-door-fill"></i>
                     </router-link>
 
-                    <router-link to="/chatview" class="action-btn d-none d-lg-flex">
+                    <router-link to="/settings" class="action-btn d-none d-lg-flex">
                         <i class="bi bi-chat-dots-fill"></i>
                         <span class="badge">2</span>
                     </router-link>
@@ -90,7 +90,7 @@
                                     <i class="bi bi-gear"></i> Settings
                                 </router-link>
                                 <div class="dropdown-divider"></div>
-                                <router-link to="/" class="dropdown-item text-danger">
+                                <router-link to="/settings" class="dropdown-item text-danger">
                                     <i class="bi bi-box-arrow-right"></i> Logout
                                 </router-link>
                             </div>

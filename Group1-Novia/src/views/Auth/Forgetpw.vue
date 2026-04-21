@@ -4,7 +4,7 @@
 
       <!-- Icon -->
       <div class="icon-wrap">
-        <i class="bi bi-envelope-open-heart" style="font-size: 30px;"></i>
+      <i class="bi bi-envelope-open-heart" style="font-size: 30px;"></i>
       </div>
 
       <h1>Forgot Password?</h1>
@@ -12,13 +12,18 @@
 
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
-          <label for="email"> <i class="bi bi-envelope-open-heart"
-              style="font-size: 20px; position: relative; padding:10px;"></i>Email Address</label>
+          <label for="email">   <i class="bi bi-envelope-open-heart" style="font-size: 20px; position: relative; padding:10px;" ></i>Email Address</label>
           <div class="input-wrap">
+       
 
-
-            <input id="email" v-model="email" type="email" placeholder="Enter your email" autocomplete="email"
-              :disabled="isLoading" />
+            <input
+              id="email"
+              v-model="email"
+              type="email"
+              placeholder="Enter your email"
+              autocomplete="email"
+              :disabled="isLoading"
+            />
           </div>
           <span v-if="emailError" class="field-error">{{ emailError }}</span>
         </div>
@@ -43,13 +48,13 @@ import { notify } from '@/utils/toast'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const router = useRouter()
+const router   = useRouter()
 const notifier = notify(router)
-const auth = useAuthStores()
+const auth     = useAuthStores()
 
-let email = ref('')
+let email      = ref('')
 let emailError = ref('')
-let isLoading = ref(false)
+let isLoading  = ref(false)
 
 function validateEmail() {
   emailError.value = ''
@@ -87,7 +92,7 @@ async function handleSubmit() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #432564, #6a0dad, #833cc5);
+  background: linear-gradient(135deg, #2d0060, #6a0dad, #9b30ff);
   background-attachment: fixed;
   background-size: cover;
   padding: 2rem 1rem;
@@ -95,7 +100,7 @@ async function handleSubmit() {
 }
 
 .forgot-card {
-  background: rgba(253, 246, 246, 0.123);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 20px;
@@ -108,15 +113,8 @@ async function handleSubmit() {
 }
 
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ── Icon ── */
@@ -132,11 +130,7 @@ async function handleSubmit() {
   margin: 0 auto 1.5rem;
   color: #ffffff;
 }
-
-.icon-wrap svg {
-  width: 26px;
-  height: 26px;
-}
+.icon-wrap svg { width: 26px; height: 26px; }
 
 /* ── Typography ── */
 h1 {
@@ -167,9 +161,7 @@ label {
   margin-bottom: 6px;
 }
 
-.input-wrap {
-  position: relative;
-}
+.input-wrap { position: relative; }
 
 .input-wrap svg {
   position: absolute;
@@ -247,9 +239,7 @@ label {
   background: linear-gradient(135deg, #a94dff, #d18bff);
 }
 
-.btn-submit:active {
-  transform: scale(0.98);
-}
+.btn-submit:active { transform: scale(0.98); }
 
 .btn-submit:disabled {
   opacity: 0.5;
@@ -268,12 +258,7 @@ label {
   animation: spin 0.6s linear infinite;
   flex-shrink: 0;
 }
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── Back link ── */
 .back-link {
@@ -286,13 +271,6 @@ label {
   text-decoration: none;
   transition: color 0.15s;
 }
-
-.back-link:hover {
-  color: #ffffff;
-}
-
-.back-link svg {
-  width: 14px;
-  height: 14px;
-}
+.back-link:hover { color: #ffffff; }
+.back-link svg { width: 14px; height: 14px; }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Navbar -->
     <nav class="navbar border-bottom">
       <div class="container d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
@@ -10,7 +11,7 @@
           <router-link to="/login" class="nav-link text-dark">
             Sign In
           </router-link>
-          <router-link to="/register" class="btn text-light" style="background-color: #7F00FF;">
+          <router-link to="/register" class="btn bg-btn text-light">
             Join Now
           </router-link>
         </div>
@@ -139,11 +140,11 @@
 
         <p class="text-muted small mb-0">
           © 2026 Novia. All rights reserved.
-          <p>Building the future of community <br>
+          Building the future of community <br>
             collaboration. Connect, share, and <br>
             grow with the next generationbr
             <br>
-             of social platforms.</p>
+             of social platforms
 
         </p>
       </div>

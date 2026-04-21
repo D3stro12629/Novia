@@ -1,12 +1,16 @@
 <template>
   <div class="rp-page">
     <div class="rp-card">
+
       <!-- Icon -->
       <div class="rp-icon-wrap">
         <div class="rp-icon-circle">
-          <i class="bi bi-x-octagon"></i>
+          
+           <i class="bi bi-x-octagon"></i>
+       
         </div>
       </div>
+
       <!-- Heading -->
       <h1 class="rp-title">Create new password</h1>
       <p class="rp-subtitle">Your new password must be at least 8 characters.</p>
@@ -15,19 +19,23 @@
       <div class="rp-field">
         <label class="rp-label">New password</label>
         <div class="rp-input-wrap" :class="{ 'is-focused': focusPass, 'has-error': errors.new_pass }">
-          <input v-model="new_pass" :type="showPass ? 'text' : 'text'" placeholder="Enter new password"
-            :disabled="loading" class="rp-input" @focus="focusPass = true" @blur="focusPass = false" />
+          <input
+            v-model="new_pass"
+            :type="showPass ? 'text' : 'text'"
+            placeholder="Enter new password"
+            :disabled="loading"
+            class="rp-input"
+            @focus="focusPass = true"
+            @blur="focusPass = false"
+          />
           <button type="button" class="rp-eye" @click="showPass = !showPass" tabindex="-1">
-            <svg v-if="!showPass" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-              <circle cx="12" cy="12" r="3" />
+            <svg v-if="!showPass" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
             </svg>
-            <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
-              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
-              <line x1="1" y1="1" x2="23" y2="23" />
+            <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+              <line x1="1" y1="1" x2="23" y2="23"/>
             </svg>
           </button>
         </div>
@@ -49,28 +57,29 @@
       <!-- Confirm Password -->
       <div class="rp-field">
         <label class="rp-label">Confirm password</label>
-        <div class="rp-input-wrap"
-          :class="{ 'is-focused': focusConfirm, 'has-error': errors.new_pass_confirmation, 'is-match': matchOk }">
-          <input v-model="new_pass_confirmation" :type="showConfirm ? 'text' : 'text'"
-            placeholder="Re-enter new password" :disabled="loading" class="rp-input" @focus="focusConfirm = true"
-            @blur="focusConfirm = false" />
+        <div class="rp-input-wrap" :class="{ 'is-focused': focusConfirm, 'has-error': errors.new_pass_confirmation, 'is-match': matchOk }">
+          <input
+            v-model="new_pass_confirmation"
+            :type="showConfirm ? 'text' : 'text'"
+            placeholder="Re-enter new password"
+            :disabled="loading"
+            class="rp-input"
+            @focus="focusConfirm = true"
+            @blur="focusConfirm = false"
+          />
           <span v-if="matchOk" class="rp-check">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-              stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12" />
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
             </svg>
           </span>
           <button v-else type="button" class="rp-eye" @click="showConfirm = !showConfirm" tabindex="-1">
-            <svg v-if="!showConfirm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-              <circle cx="12" cy="12" r="3" />
+            <svg v-if="!showConfirm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
             </svg>
-            <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
-              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
-              <line x1="1" y1="1" x2="23" y2="23" />
+            <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+              <line x1="1" y1="1" x2="23" y2="23"/>
             </svg>
           </button>
         </div>
@@ -86,7 +95,7 @@
       <!-- Back Link -->
       <div class="rp-back">
         <router-link to="/verify-otp" class="rp-back-link">
-          <i class="bi bi-arrow-left-short"></i>
+        <i class="bi bi-arrow-left-short"></i>
           Back to verify OTP
         </router-link>
       </div>
@@ -102,30 +111,30 @@ import api from '@/api/http'
 import { notify } from '@/utils/toast'
 
 const router = useRouter()
-const route = useRoute()
-const toast = notify(router)
+const route  = useRoute()
+const toast  = notify(router)
 
 const email = computed(() => route.query.email || '')
-const otp = computed(() => route.query.otp || '')
+const otp   = computed(() => route.query.otp   || '')
 
-const new_pass = ref('')
+const new_pass              = ref('')
 const new_pass_confirmation = ref('')
-const showPass = ref(false)
-const showConfirm = ref(false)
-const focusPass = ref(false)
-const focusConfirm = ref(false)
-const loading = ref(false)
-const errors = ref({ new_pass: '', new_pass_confirmation: '' })
+const showPass              = ref(false)
+const showConfirm           = ref(false)
+const focusPass             = ref(false)
+const focusConfirm          = ref(false)
+const loading               = ref(false)
+const errors                = ref({ new_pass: '', new_pass_confirmation: '' })
 
 // Password strength score (1–4)
 const strength = computed(() => {
   const p = new_pass.value
   if (!p) return 0
   let score = 0
-  if (p.length >= 8) score++
-  if (/[A-Z]/.test(p)) score++
-  if (/[0-9]/.test(p)) score++
-  if (/[^A-Za-z0-9]/.test(p)) score++
+  if (p.length >= 8)             score++
+  if (/[A-Z]/.test(p))          score++
+  if (/[0-9]/.test(p))          score++
+  if (/[^A-Za-z0-9]/.test(p))  score++
   return score
 })
 
@@ -177,9 +186,9 @@ async function handleSubmit() {
   loading.value = true
   try {
     const formData = new FormData()
-    formData.append('email', email.value)
-    formData.append('otp', otp.value)
-    formData.append('new_pass', new_pass.value)
+    formData.append('email',                 email.value)
+    formData.append('otp',                   otp.value)
+    formData.append('new_pass',              new_pass.value)
     formData.append('new_pass_confirmation', new_pass_confirmation.value)
 
     const res = await api.post('/api/reset/pass', formData, {
@@ -201,27 +210,24 @@ async function handleSubmit() {
 
 <style scoped>
 /* ─── Page ─── */
-/* ─── Page ─── */
 .rp-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #2d0a6e 0%, #6b0fa8 40%, #a020c8 70%, #7c10b8 100%);
+  background: linear-gradient(135deg, #f0f4ff 0%, #f5f0ff 100%);
   padding: 1.5rem;
   font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
 /* ─── Card ─── */
 .rp-card {
-  background: rgba(120, 40, 180, 0.35);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: #ffffff;
   border-radius: 24px;
   padding: 2.5rem 2.25rem 2rem;
   width: 100%;
-  max-width: 460px;
+  max-width: 420px;
+  box-shadow: 0 2px 0 #e0e7ff, 0 20px 60px rgba(99, 102, 241, 0.1);
   animation: slideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -233,34 +239,33 @@ async function handleSubmit() {
 }
 
 .rp-icon-circle {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: rgba(180, 100, 255, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 30px;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
 }
 
 /* ─── Heading ─── */
 .rp-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
-  color: #ffffff;
+  color: #111827;
   text-align: center;
-  margin: 0 0 0.5rem;
-  letter-spacing: -0.3px;
+  margin: 0 0 0.35rem;
+  letter-spacing: -0.4px;
 }
 
 .rp-subtitle {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.65);
+  font-size: 13.5px;
+  color: #9ca3af;
   text-align: center;
   margin: 0 0 2rem;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 /* ─── Field ─── */
@@ -269,102 +274,75 @@ async function handleSubmit() {
 }
 
 .rp-label {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 13.5px;
+  display: block;
+  font-size: 13px;
   font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 9px;
-}
-
-.rp-label i {
-  font-size: 15px;
-  opacity: 0.85;
+  color: #374151;
+  margin-bottom: 7px;
 }
 
 /* ─── Input wrapper ─── */
 .rp-input-wrap {
   display: flex;
   align-items: center;
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border: 1.5px solid #e5e7eb;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.1);
+  background: #f9fafb;
   transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
 
 .rp-input-wrap.is-focused {
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+  border-color: #6366f1;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
 .rp-input-wrap.has-error {
   border-color: #f87171;
-  box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.15);
+  box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.1);
 }
 
 .rp-input-wrap.is-match {
   border-color: #34d399;
-  box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.12);
+  box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.1);
 }
 
 .rp-input {
   flex: 1;
-  height: 50px;
+  height: 46px;
   border: none;
   background: transparent;
-  padding: 0 14px;
+  padding: 0 12px;
   font-size: 14px;
-  color: #ffffff;
+  color: #111827;
   outline: none;
   font-family: inherit;
 }
-.rp-input::placeholder {
-  color: #d1d5db;
-}
 
-.rp-input:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.rp-input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
-}
-
-.rp-input:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
+.rp-input::placeholder { color: #d1d5db; }
+.rp-input:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* ─── Eye / check ─── */
 .rp-eye {
   background: none;
   border: none;
-  padding: 0 13px;
+  padding: 0 12px;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.5);
+  color: #9ca3af;
   display: flex;
   align-items: center;
-  height: 50px;
+  height: 46px;
   transition: color 0.15s;
 }
 
-.rp-eye:hover {
-  color: #6366f1;
-}
+.rp-eye:hover { color: #6366f1; }
 
-.rp-eye:hover {
-  color: #ffffff;
-}
 .rp-check {
   display: flex;
   align-items: center;
-  padding: 0 13px;
-  color: #34d399;
-  height: 50px;
+  padding: 0 12px;
+  color: #10b981;
+  height: 46px;
 }
 
 /* ─── Strength ─── */
@@ -385,25 +363,14 @@ async function handleSubmit() {
   flex: 1;
   height: 4px;
   border-radius: 99px;
-  background: rgba(255, 255, 255, 0.15);
+  background: #e5e7eb;
   transition: background 0.3s;
 }
 
-.rp-bar.active-weak {
-  background: #f87171;
-}
-
-.rp-bar.active-fair {
-  background: #fb923c;
-}
-
-.rp-bar.active-good {
-  background: #facc15;
-}
-
-.rp-bar.active-strong {
-  background: #34d399;
-}
+.rp-bar.active-weak   { background: #f87171; }
+.rp-bar.active-fair   { background: #fb923c; }
+.rp-bar.active-good   { background: #facc15; }
+.rp-bar.active-strong { background: #34d399; }
 
 .rp-strength-label {
   font-size: 12px;
@@ -413,76 +380,48 @@ async function handleSubmit() {
   text-transform: capitalize;
 }
 
-.label-weak {
-  color: #f87171;
-}
+.label-weak   { color: #f87171; }
+.label-fair   { color: #fb923c; }
+.label-good   { color: #ca8a04; }
+.label-strong { color: #10b981; }
 
-.label-fair {
-  color: #fb923c;
-}
-
-.label-good {
-  color: #ca8a04;
-}
-
-.label-strong {
-  color: #10b981;
-}
-
-.label-weak {
-  color: #f87171;
-}
-
-.label-fair {
-  color: #fb923c;
-}
-
-.label-good {
-  color: #facc15;
-}
-
-.label-strong {
-  color: #34d399;
-}
 /* ─── Error ─── */
 .rp-error {
   display: block;
   font-size: 12px;
-  color: #fca5a5;
+  color: #ef4444;
   margin-top: 5px;
 }
 
 /* ─── Button ─── */
 .rp-btn {
   width: 100%;
-  height: 52px;
+  height: 50px;
   border-radius: 12px;
   border: none;
-  background: linear-gradient(135deg, #a855f7, #7c3aed);
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: #fff;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   font-family: inherit;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
   margin-bottom: 1.5rem;
-  letter-spacing: 0.3px;
-  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.45);
+  letter-spacing: 0.2px;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
   transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
 }
 
 .rp-btn:hover:not(:disabled) {
   opacity: 0.92;
-  box-shadow: 0 6px 28px rgba(168, 85, 247, 0.6);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
 }
 
-.rp-btn:active:not(:disabled) {
-  transform: scale(0.98);
-}
+.rp-btn:active:not(:disabled) { transform: scale(0.98); }
 
 .rp-btn:disabled {
   opacity: 0.55;
@@ -502,44 +441,27 @@ async function handleSubmit() {
 }
 
 /* ─── Back ─── */
-.rp-back {
-  text-align: center;
-}
+.rp-back { text-align: center; }
 
 .rp-back-link {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.55);
+  color: #9ca3af;
   text-decoration: none;
   transition: color 0.15s;
 }
 
-.rp-back-link:hover {
-  color: #6366f1;
-}
-
-.rp-back-link:hover {
-  color: #ffffff;
-}
+.rp-back-link:hover { color: #6366f1; }
 
 /* ─── Animations ─── */
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 </style>
