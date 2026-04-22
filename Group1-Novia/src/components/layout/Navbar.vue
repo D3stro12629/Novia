@@ -1,5 +1,5 @@
 <template>
-    <nav class="novia-navbar bg-dark">
+    <nav class="novia-navbar">
         <div class="navbar-container">
             <!-- Left: Toggle + Brand -->
             <div class="navbar-section left">
