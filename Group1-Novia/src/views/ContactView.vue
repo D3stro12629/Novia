@@ -121,7 +121,6 @@
                     </div>
                   </div>
                 </div>
-
                 <!-- Social Links -->
                 <div class="info-card p-3">
                   <h3 class="h6 fw-bold mb-3 sidebar-heading">Follow Us</h3>
@@ -165,7 +164,6 @@ import DashboardLayout from '@/layouts/DashboardLayout.vue'
 
 const isSubmitting = ref(false)
 const submitted = ref(false)
-
 const form = reactive({
   firstName: '',
   lastName: '',
