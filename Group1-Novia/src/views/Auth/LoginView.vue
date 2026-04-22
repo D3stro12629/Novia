@@ -1,82 +1,64 @@
 <template>
   <main class="login-page">
-    <div class="container">
-      <div class="row align-items-center min-vh-100">
-
-        <!-- Login Card -->
-        <div class="col-12 col-lg-5 mx-auto">
-          <div class="card login-card border-0">
-            <div class="card-body p-5">
-              <h2 class="text-center fw-bold mb-1 card-title">Login</h2>
-              <p class="text-center card-subtitle mb-4">Welcome back</p>
-
-              <form @submit.prevent="handleLogin">
-
-                <!-- Email or Phone -->
-                <div class="mb-3">
-                  <label class="custom-label">
-                    <i class="bi bi-envelope"></i> Email or phone number
-                  </label>
-                  <input v-model="email_or_phone" type="text" class="form-control custom-input"
-                    placeholder="Enter your Email or phone number">
-                  <p v-if="err.email_or_phone" class="field-error pt-2">
-                    {{ err.email_or_phone }}
-                  </p>
-                </div>
-
-                <!-- Password -->
-                <div class="mb-3">
-                  <label class="custom-label">
-                    <i class="bi bi-lock"></i> Password
-                  </label>
-                  <div class="input-group position-relative">
-                    <input v-model="password" :type="passwordType"
-                      class="form-control custom-input pe-5 rounded-3"
-                      placeholder="Enter your password" />
-                    <span class="password-eye" @click="togglePassword">
-                      <i :class="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
-                    </span>
-                  </div>
-                  <p v-if="err.password" class="field-error pt-2">
-                    {{ err.password }}
-                  </p>
-                </div>
-
-                <!-- Remember + Forgot -->
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                  <div class="form-check d-flex align-items-center gap-2">
-                    <input class="form-check-input custom-check" type="checkbox" v-model="rememberMe">
-                    <label class="form-check-label remember-label">Remember me</label>
-                  </div>
-                  <router-link to="/forget-password" class="forgot-link">
-                    Forgot password?
-                  </router-link>
-                </div>
-
-                <!-- Button -->
-                <div class="d-grid">
-                  <button :disabled="isLoading" type="submit" class="btn login-btn">
-                    <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
-                    <span v-else>Sign In</span>
-                  </button>
-                </div>
-
-                <p class="text-center mt-4 redirect-text">
-                  Don't have an account?
-                  <router-link to="/register" class="register-link">Register</router-link>
-                </p>
-
-              </form>
-            </div>
-          </div>
+    <div class="blob-wrapper">
+      <div class="profile-header">
+        <div class="profile-circle">
+          <i class="bi bi-person-fill"></i>
         </div>
-
-        <!-- Image -->
-        <div class="col-lg-6 d-none d-lg-block">
-          <img src="../../assets/img/2.png" class="login-image" alt="Login Image">
-        </div>
-
       </div>
+
+      <h2 class="text-center text-white fw-bold sign-in-title">Login</h2>
+
+      <form @submit.prevent="handleLogin" class="mt-4">
+        <div class="custom-input-group mb-2">
+          <div class="icon-box">
+            <i class="bi bi-person"></i>
+          </div>
+          <input 
+            v-model="email_or_phone" 
+            type="text" 
+            placeholder="Enter your Email or Phone" 
+            class="inner-input"
+          />
+        </div>
+        <p v-if="err.email_or_phone" class="error-msg">{{ err.email_or_phone }}</p>
+
+        <div class="custom-input-group mb-2 mt-3">
+          <div class="icon-box">
+            <i class="bi bi-lock"></i>
+          </div>
+          <input 
+            v-model="password" 
+            :type="password" 
+            placeholder="Enter your password" 
+            class="inner-input"
+          />
+          <span class="eye-icon" @click="togglePassword">
+            <i :class="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"></i>
+          </span>
+        </div>
+        <p v-if="err.password" class="error-msg">{{ err.password }}</p>
+
+        <div class="d-flex justify-content-between align-items-center mt-3 mb-4 links-row">
+          <label class="checkbox-container">
+            <input type="checkbox" v-model="rememberMe">
+            <span>Remember me</span>
+          </label>
+          <router-link to="/forget-password" class="text-link">Forgot password?</router-link>
+        </div>
+
+        <div class="text-center">
+          <button :disabled="isLoading" type="submit" class="btn-login-gradient">
+            <span v-if="isLoading" class="spinner-border spinner-border-sm"></span>
+            <span v-else>LOGIN</span>
+          </button>
+        </div>
+
+        <p class="text-center mt-4 footer-text">
+          Don't have account? 
+          <router-link to="/register" class="text-link fw-bold">Sign up!</router-link>
+        </p>
+      </form>
     </div>
   </main>
 </template>
@@ -127,158 +109,134 @@ async function handleLogin() {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
-
+/* Background and font */
 .login-page {
-  background: linear-gradient(135deg, #2d0060, #6a0dad, #9b30ff);
-  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #cc2be0, #2196f3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 20px;
 }
 
-.login-card {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(18px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  box-shadow: 0 10px 40px rgba(80, 0, 160, 0.35);
-  animation: fadeIn 0.5s ease;
+/* Organic Blob Container */
+.blob-wrapper {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  width: 100%;
+  max-width: 420px;
+  padding: 60px 45px 45px;
+  border-radius: 40% 60% 50% 50% / 40% 40% 60% 60%;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(25px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* Top Profile Circle */
+.profile-header {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.profile-circle {
+  width: 85px;
+  height: 85px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  color: #c729df;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
 }
 
-.card-title {
-  color: #ffffff;
-  font-size: 1.8rem;
+.sign-in-title {
+  font-size: 2rem;
+  margin-top: 10px;
 }
 
-.card-subtitle {
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 0.85rem;
+/* Input Fields Style */
+.custom-input-group {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50px;
+  padding: 6px 15px;
 }
 
-.custom-label {
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 6px;
-  color: #ffffff;
+.icon-box {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(to right, #b727d8, #2196f3);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-right: 12px;
 }
 
-.custom-input {
-  background: rgba(255, 255, 255, 0.12) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  border-radius: 12px !important;
-  padding: 12px 14px !important;
-  color: #ffffff !important;
-  font-family: "Poppins", sans-serif;
-  transition: 0.3s;
-}
-
-.custom-input::placeholder {
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.custom-input:focus {
-  border-color: rgba(200, 150, 255, 0.8) !important;
-  box-shadow: 0 0 0 3px rgba(155, 48, 255, 0.2) !important;
-  background: rgba(255, 255, 255, 0.18) !important;
+.inner-input {
+  background: transparent;
+ border: none;
+  width: 100%;
+  color: rgb(26, 23, 23);
   outline: none;
 }
+.inner-input::placeholder {
+  color: rgba(91, 87, 87, 0.8);
+}
 
-.password-eye {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
+.eye-icon {
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.7);
-  z-index: 5;
-  transition: color 0.2s;
+  color: white;
 }
 
-.password-eye:hover { color: #ffffff; }
-
-.field-error {
-  font-size: 0.75rem;
-  color: #ffaaaa;
-  margin-top: 2px;
-  padding-left: 2px;
-}
-
-.custom-check {
-  width: 16px;
-  height: 16px;
-  accent-color: #9b30ff;
-  cursor: pointer;
-}
-
-.remember-label {
-  font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-  margin: 0;
-}
-
-.forgot-link {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.82rem;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.forgot-link:hover { color: #ffffff; }
-
-.login-btn {
-  background: linear-gradient(135deg, #9b30ff, #c77dff);
-  color: #ffffff;
-  border: none;
-  border-radius: 12px;
-  padding: 13px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  font-family: "Poppins", sans-serif;
-  letter-spacing: 0.02em;
-  box-shadow: 0 4px 18px rgba(155, 48, 255, 0.45);
-  transition: 0.3s;
-}
-
-.login-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(155, 48, 255, 0.55);
-  background: linear-gradient(135deg, #a94dff, #d18bff);
-  color: #ffffff;
-}
-
-.login-btn:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.redirect-text {
-  color: rgba(255, 255, 255, 0.75);
+/* Links and labels */
+.links-row, .footer-text {
   font-size: 0.85rem;
+  color: white;
 }
-
-.register-link {
-  color: #c77dff;
-  font-weight: 600;
+.text-link {
+  color: white;
   text-decoration: none;
-  transition: color 0.2s;
 }
-
-.register-link:hover {
-  color: #ffffff;
+.text-link:hover {
   text-decoration: underline;
 }
 
-.login-image {
-  width: 100%;
-  height: auto;
-  border-radius: 20px;
-  filter: drop-shadow(0 8px 32px rgba(80, 0, 160, 0.3));
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* Gradient Button */
+.btn-login-gradient {
+  background: linear-gradient(to right, #d409cd, #b727d8);
+  border: none;
+  color: white;
+  padding: 12px 50px;
+  border-radius: 50px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+.btn-login-gradient:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.error-msg {
+  color: #ffbaba;
+  font-size: 0.75rem;
+  margin: 5px 0 0 15px;
 }
 </style>
