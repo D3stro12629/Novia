@@ -92,7 +92,7 @@ async function handleSubmit() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #2d0060, #6a0dad, #9b30ff);
+  background: #0f172a;
   background-attachment: fixed;
   background-size: cover;
   padding: 2rem 1rem;
@@ -193,7 +193,7 @@ label {
 }
 
 .input-wrap input:focus {
-  border-color: rgba(200, 150, 255, 0.8);
+  border-color: #6366f1;
   background: rgba(255, 255, 255, 0.18);
   box-shadow: 0 0 0 3px rgba(155, 48, 255, 0.2);
 }

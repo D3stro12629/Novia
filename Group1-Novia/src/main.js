@@ -3,7 +3,7 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import ToastPlugin from 'vue-toast-notification'
-import 'vue-toast-notification/dist/theme-sugar.css' // ✅ toast styles
+import 'vue-toast-notification/dist/theme-sugar.css'
 
 import App from './App.vue'
 import router from './router'
@@ -24,4 +24,20 @@ for (const [key, component] of Object.entries(LucideIcons)) {
   app.component(key, component);
 }
 
-app.mount('#app')
+// Initialize user data if token exists
+const initApp = async () => {
+  const { useAuthStores } = await import('./stores/auth')
+  const auth = useAuthStores()
+  
+  if (auth.isLoggedIn) {
+    try {
+      // await auth.fetchUser()
+    } catch (error) {
+      console.error('Failed to initialize user data:', error)
+    }
+  }
+}
+
+initApp().then(() => {
+  app.mount('#app')
+})

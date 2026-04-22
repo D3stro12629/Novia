@@ -1,9 +1,12 @@
 <template>
   <aside :class="['novia-sidebar', { 'is-open': isOpen, 'is-mobile': !isDesktop }]">
+    
+    <!-- Overlay (Mobile) -->
+    <div v-if="isOpen && !isDesktop" class="sidebar-overlay" @click="$emit('close')"></div>
+
     <div class="sidebar-content">
-      
       <!-- Mobile Header -->
-      <div class="sidebar-mobile-header d-lg-none">
+      <div class="sidebar-mobile-header">
         <div class="brand-sm">
           <i class="bi bi-hexagon-fill"></i>
           <span>Novia</span>
@@ -15,102 +18,107 @@
 
       <!-- Navigation -->
       <nav class="sidebar-nav">
-        <!-- Main Menu Group -->
+
+        <!-- Main -->
         <div class="nav-group">
           <span class="nav-label">Main Menu</span>
           <ul>
-            <li v-for="(item, index) in menuItems" :key="index">
-              <!-- Using active-class="active" fixes the styling issues -->
-              <router-link 
-                :to="item.path" 
-                class="nav-link" 
-                active-class="active"
-                @click="handleNavClick"
+            <li v-for="item in menuItems" :key="item.key">
+              <router-link
+                :to="item.to"
+                class="nav-link"
+                :class="{ active: activeItem === item.key }"
+                @click="setActive(item.key)"
               >
                 <span class="link-icon">
                   <i :class="['bi', item.icon]"></i>
                 </span>
                 <span class="link-text">{{ item.label }}</span>
-                <!-- Indicator shows only when the route is active -->
-                <span v-if="$route.path === item.path" class="active-indicator"></span>
+                <span v-if="activeItem === item.key" class="active-indicator"></span>
               </router-link>
             </li>
           </ul>
         </div>
 
-        <!-- Settings Group -->
+        <!-- Settings -->
         <div class="nav-group">
           <span class="nav-label">Settings</span>
           <ul>
-            <li>
-              <router-link to="/settings" class="nav-link" active-class="active" @click="handleNavClick">
-                <span class="link-icon"><i class="bi bi-gear"></i></span>
-                <span class="link-text">Settings</span>
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/messages" class="nav-link" active-class="active" @click="handleNavClick">
-                <span class="link-icon"><i class="bi bi-chat-dots"></i></span>
-                <span class="link-text">Message</span>
+            <li v-for="item in settingsItems" :key="item.key">
+              <router-link
+                :to="item.to"
+                class="nav-link"
+                :class="{ active: activeItem === item.key }"
+                @click="setActive(item.key)"
+              >
+                <span class="link-icon">
+                  <i :class="['bi', item.icon]"></i>
+                </span>
+                <span class="link-text">{{ item.label }}</span>
+                <span v-if="activeItem === item.key" class="active-indicator"></span>
               </router-link>
             </li>
           </ul>
         </div>
 
-        <!-- Account Group (Bottom) -->
+        <!-- Logout -->
         <div class="nav-group bottom">
           <span class="nav-label">Account</span>
-          <a href="javascript:void(0)" @click="handleLogout" class="nav-link logout">
+          <button class="nav-link logout" @click="handleLogout">
             <span class="link-icon">
               <i class="bi bi-box-arrow-left"></i>
             </span>
             <span class="link-text">Log Out</span>
-          </a>
+          </button>
         </div>
+
       </nav>
     </div>
   </aside>
 </template>
-
 <script setup>
-import { ref, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { useAuthStores } from '@/stores/auth'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router' // Fixed
+// import { useAuthStores } from '@/stores/auth' // Make sure this exists!
 
 const props = defineProps({
-  isOpen: { type: Boolean, default: true }
+  isOpen: Boolean
 })
 
 const emit = defineEmits(['close'])
 const router = useRouter()
-const route = useRoute()
-const auth = useAuthStores()
+const route = useRoute() 
+// const auth = useAuthStores() // Uncomment if imported
 
-const isDesktop = computed(() => window.innerWidth >= 992)
+const windowWidth = ref(window.innerWidth)
+const isDesktop = computed(() => windowWidth.value >= 992)
 
-// Updated Menu Items with correct paths
-const menuItems = ref([
-  { label: 'Home', icon: 'bi-house-door', path: '/home' },
-  { label: 'About', icon: 'bi-people', path: '/about' },
-  { label: 'Contact', icon: 'bi-envelope', path: '/contact' },
-  { label: 'Help', icon: 'bi-question-circle', path: '/help' },
-])
+/* Menu Data */
+const menuItems = [
+  { key: 'home', label: 'Home', icon: 'bi-house-door', to: '/' },
+  { key: 'about', label: 'About', icon: 'bi-people', to: '/about' },
+  { key: 'contact', label: 'Contact', icon: 'bi-envelope', to: '/contact' },
+]
 
-const handleNavClick = () => {
-  if (!isDesktop.value) {
-    emit('close')
-  }
+const settingsItems = [
+  { key: 'settings', label: 'Settings', icon: 'bi-gear', to: '/settings' },
+  { key: 'messages', label: 'Message', icon: 'bi-chat-dots', to: '/messages' },
+  { key: 'Help', label: 'Help', icon: 'bi-shield-check', to: '/help' },
+]
+
+/* Logic to determine which item is active based on URL */
+const activeItem = computed(() => {
+  const allItems = [...menuItems, ...settingsItems]
+  const currentItem = allItems.find(item => item.to === route.path)
+  return currentItem ? currentItem.key : ''
+})
+
+const setActive = () => {
+  if (!isDesktop.value) emit('close')
 }
 
-const handleLogout = () => {
-  if(confirm("Logout from Novia?")) {
-    auth.isLoggedIn = false
-    localStorage.clear()
-    router.push('/')
-  }
-}
+// ... rest of your code
 </script>
-
 <style scoped>
 /* SIDEBAR BASE */
 .novia-sidebar {
@@ -197,5 +205,40 @@ ul { list-style: none; padding: 0; margin: 0; }
 
 @media (max-width: 991px) {
   .sidebar-mobile-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+}
+/* Overlay */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1030;
+}
+
+/* Fix mobile header always hidden on desktop */
+.sidebar-mobile-header {
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .sidebar-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Better sidebar layering */
+.novia-sidebar {
+  z-index: 1040;
+}
+
+/* Improve button reset */
+.nav-link.logout {
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
 }
 </style>

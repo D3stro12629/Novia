@@ -13,7 +13,7 @@ import Editeducationview from '@/views/Editeducationview.vue'
 import Editprojectview from '@/views/Editprojectview.vue'
 import SettingsView from '@/views/SettingsView.vue'
 import AboutView from '../views/AboutView.vue'
-// import MessagePanelView from '@/views/MessagePanelView.vue'
+import MessagePanelView from '@/views/MessagePanelView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -105,16 +105,28 @@ const router = createRouter({
       component: () => import('@/views/CreatePostView.vue'),
       meta: { require: true },
     },
-    // {
-    //   path: '/messages',
-    //   name: 'messages',
-    //   component: MessagePanelView,
-    //   meta: { require: true },
-    // },
+    {
+      path: '/messages',
+      name: 'messages',
+      component: MessagePanelView,
+      meta: { require: true },
+    },
     {
       path: '/about',
       name: 'about',
       component: () => import('@/views/AboutView.vue'),
+      meta: { require: true },
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('@/views/ContactView.vue'),
+      meta: { require: true },
+    },
+    {
+      path: '/help',
+      name: 'help',
+      component: () => import('@/views/HelpView.vue'),
       meta: { require: true },
     }
   ],
