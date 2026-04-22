@@ -305,7 +305,7 @@ const handleDeleteAccount = async () => {
     deleteError.value = ''
 
     try {
-        const response = await fetch('http://novia2.csm.linkpc.net/api/profile/delete-acc', {
+        const response = await fetch('https://novia2.csm.linkpc.net/api/profile/delete-acc', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         })

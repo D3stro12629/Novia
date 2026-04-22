@@ -215,12 +215,7 @@ const pillars = [
   { icon: '◎', title: 'Human', desc: 'Tools that amplify people, never replacing the human touch' },
 ]
 
-const techItems = [
-  'WebSocket mesh network',
-  'Fine-tuned LLMs on domain-specific data',
-  'Edge-first global delivery (< 50ms worldwide)',
-  'GDPR & CCPA compliant by design',
-]
+const techItems = ['WebSocket Mesh', 'Edge Functions', 'Embedded ML', 'Post-Quantum Crypto']
 
 const team = ref([
   {
@@ -253,12 +248,36 @@ const team = ref([
   },
 ])
 
-function onPhotoChange(event, index) {
+// Utility functions (removed TypeScript type annotations)
+const formatFullDate = (dateString) => {
+  const date = new Date(dateString)
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+
+const getAge = (dob) => {
+  const birthDate = new Date(dob)
+  const today = new Date()
+  let age = today.getFullYear() - birthDate.getFullYear()
+  const monthDiff = today.getMonth() - birthDate.getMonth()
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--
+  }
+  return age
+}
+
+const onPhotoChange = (event, index) => {
   const file = event.target.files[0]
-  if (!file) return
-  const reader = new FileReader()
-  reader.onload = (e) => { team.value[index].photo = e.target.result }
-  reader.readAsDataURL(file)
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      team.value[index].photo = e.target.result
+    }
+    reader.readAsDataURL(file)
+  }
 }
 </script>
 

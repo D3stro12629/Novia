@@ -11,7 +11,7 @@
           <router-link to="/login" class="nav-link text-dark">
             Sign In
           </router-link>
-          <router-link to="/register" class="btn bg-btn text-light">
+          <router-link to="/register" class="btn text-light" style="background-color: #c77dff;">
             Join Now
           </router-link>
         </div>
@@ -113,7 +113,7 @@
     </section>
 
     <!-- CTA -->
-    <section class="py-5  text-white text-center" style="background-color:blueviolet;">
+    <section class="py-5  text-white text-center" style="background-color:#c77dff;">
       <div class="container">
         <h2 class="fw-bold mb-3">
           Ready to start your professional journey?
@@ -140,27 +140,15 @@
 
         <p class="text-muted small mb-0">
           © 2026 Novia. All rights reserved.
-          <p>Building the future of community <br>
+          Building the future of community <br>
             collaboration. Connect, share, and <br>
             grow with the next generationbr
             <br>
-             of social platforms.</p>
+             of social platforms
 
         </p>
       </div>
     </footer>
-        <footer class="py-4 bg-light border-top">
-      <div class="container d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-          <i class="bi bi-briefcase-fill text-primary me-2"></i>
-          <span class="fw-bold">Novia</span>
-        </div>
-        <p class="text-muted small mb-0">
-          © 2026 Novia. All rights reserved.
-        </p>
-      </div>
-    </footer>
-
   </div>
 </template>
 

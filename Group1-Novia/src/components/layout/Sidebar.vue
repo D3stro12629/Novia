@@ -3,7 +3,7 @@
     <div class="sidebar-content">
       
       <!-- Mobile Header -->
-      <div class="sidebar-mobile-header d-lg-none">
+      <div class="sidebar-mobile-header">
         <div class="brand-sm">
           <i class="bi bi-hexagon-fill"></i>
           <span>Novia</span>
@@ -67,11 +67,11 @@
             <span class="link-text">Log Out</span>
           </a>
         </div>
+
       </nav>
     </div>
   </aside>
 </template>
-
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
@@ -110,7 +110,6 @@ const handleLogout = () => {
   }
 }
 </script>
-
 <style scoped>
 /* SIDEBAR BASE */
 .novia-sidebar {

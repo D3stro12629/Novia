@@ -1,12 +1,8 @@
 <template>
     <nav class="novia-navbar">
         <div class="navbar-container">
-            <!-- Left: Toggle + Brand -->
+            <!-- Left: Brand -->
             <div class="navbar-section left">
-                <button class="mobile-toggle d-lg-none" @click="$emit('toggle-sidebar')" aria-label="Toggle menu">
-                    <i class="bi bi-list"></i>
-                </button>
-
                 <router-link to="/settings" class="brand">
                     <div class="logo-icon">
                         <i class="bi bi-hexagon-fill"></i>
@@ -16,7 +12,7 @@
             </div>
 
             <!-- Center: Search -->
-            <div class="navbar-section center d-none d-md-flex">
+            <div class="navbar-section center">
                 <div class="search-container">
                     <i class="bi bi-search search-icon"></i>
                     <input type="text" placeholder="Search..." class="search-input">
@@ -26,75 +22,45 @@
             <!-- Right: Actions -->
             <div class="navbar-section right">
                 <div class="nav-actions">
-                    <router-link to="/settings" class="action-btn d-none d-lg-flex">
-                        <i class="bi bi-house-door-fill"></i>
-                    </router-link>
+                    <!-- Notifications -->
+                    <button class="action-btn" @click="toggleNotifications">
+                        <i class="bi bi-bell-fill"></i>
+                        <span class="notification-dot"></span>
+                    </button>
 
-                    <router-link to="/settings" class="action-btn d-none d-lg-flex">
+                    <!-- Messages -->
+                    <button class="action-btn" @click="toggleMessages">
                         <i class="bi bi-chat-dots-fill"></i>
-                        <span class="badge">2</span>
-                    </router-link>
+                        <span class="badge">{{ unreadMessages }}</span>
+                    </button>
 
-                    <!-- Notifications Dropdown -->
-                    <div class="dropdown-container">
-                        <button class="action-btn" @click.stop="toggleDropdown('notifications')"
-                            :class="{ active: activeDropdown === 'notifications' }">
-                            <i class="bi bi-bell-fill"></i>
-                            <span class="badge pulse">3</span>
-                        </button>
+                    <!-- User Profile Dropdown -->
+                    <div class="user-profile-dropdown" ref="dropdownRef">
+                        <div class="user-profile" @click="toggleProfileDropdown">
+                            <img :src="userAvatar" alt="Profile" class="user-avatar">
+                            <span class="user-name">{{ userName }}</span>
+                            <i class="bi bi-chevron-down dropdown-icon" :class="{ 'rotate': showProfileDropdown }"></i>
+                        </div>
 
-                        <Transition name="dropdown">
-                            <div v-if="activeDropdown === 'notifications'" class="dropdown-menu notifications-dropdown">
-                                <div class="dropdown-header">
-                                    <h6>Notifications</h6>
-                                    <router-link to="/settings" class="mark-read">Mark all read</router-link>
-                                </div>
-                                <div class="dropdown-items">
-                                    <router-link v-for="i in 3" :key="i" to="/settings" class="notification-item">
-                                        <div class="notif-avatar" :class="`color-${i}`">
-                                            <i class="bi bi-person-fill"></i>
-                                        </div>
-                                        <div class="notif-content">
-                                            <p><strong>User {{ i }}</strong> liked your post</p>
-                                            <span>{{ i }}m ago</span>
-                                        </div>
-                                    </router-link>
-                                </div>
-                            </div>
-                        </Transition>
-                    </div>
-
-                    <!-- Profile Dropdown -->
-                    <div class="dropdown-container">
-                        <button class="profile-btn" @click.stop="toggleDropdown('profile')"
-                            :class="{ active: activeDropdown === 'profile' }">
-                            <img src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff" alt="Profile">
-                            <div class="status-indicator"></div>
-                        </button>
-
-                        <Transition name="dropdown">
-                            <div v-if="activeDropdown === 'profile'" class="dropdown-menu profile-dropdown">
-                                <div class="profile-header">
-                                    <img src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff"
-                                        class="header-avatar">
-                                    <div class="header-info">
-                                        <h6>John Doe</h6>
-                                        <span>@johndoe</span>
-                                    </div>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <router-link to="/settings" class="dropdown-item">
-                                    <i class="bi bi-person"></i> Profile
-                                </router-link>
-                                <router-link to="/settings" class="dropdown-item">
-                                    <i class="bi bi-gear"></i> Settings
-                                </router-link>
-                                <div class="dropdown-divider"></div>
-                                <router-link to="/settings" class="dropdown-item text-danger">
-                                    <i class="bi bi-box-arrow-right"></i> Logout
-                                </router-link>
-                            </div>
-                        </Transition>
+                        <div v-if="showProfileDropdown" class="profile-dropdown-menu">
+                            <router-link to="/profile" class="dropdown-item" @click="closeDropdown">
+                                <i class="bi bi-person-circle"></i>
+                                <span>My Profile</span>
+                            </router-link>
+                            <router-link to="/profileDetail" class="dropdown-item" @click="closeDropdown">
+                                <i class="bi bi-person-fill"></i>
+                                <span>Profile Details</span>
+                            </router-link>
+                            <router-link to="/settings" class="dropdown-item" @click="closeDropdown">
+                                <i class="bi bi-gear"></i>
+                                <span>Settings</span>
+                            </router-link>
+                            <hr class="dropdown-divider">
+                            <button class="dropdown-item" @click="logout">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Logout</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,33 +69,74 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStores } from '@/stores/auth'
 
-const emit = defineEmits(['toggle-sidebar'])
-const activeDropdown = ref(null)
+const router = useRouter()
+const auth = useAuthStores()
 
-const toggleDropdown = (name) => {
-    activeDropdown.value = activeDropdown.value === name ? null : name
+// Reactive data
+const unreadMessages = ref(3)
+const showProfileDropdown = ref(false)
+const dropdownRef = ref(null)
+
+// Computed properties for user data
+const userAvatar = computed(() => auth.user?.avatar || 'https://ui-avatars.com/api/?name=User&background=6366f1&color=fff')
+const userName = computed(() => auth.user?.full_name || 'User')
+
+// Functions
+const toggleNotifications = () => {
+    // TODO: Implement notifications panel
+    console.log('Toggle notifications')
 }
 
-const closeDropdowns = (e) => {
-    if (!e.target.closest('.dropdown-container')) {
-        activeDropdown.value = null
+const toggleMessages = () => {
+    router.push('/messages')
+}
+
+const toggleProfileDropdown = () => {
+    showProfileDropdown.value = !showProfileDropdown.value
+}
+
+const closeDropdown = () => {
+    showProfileDropdown.value = false
+}
+
+const logout = () => {
+    auth.logout()
+    router.push('/login')
+    closeDropdown()
+}
+
+// Click outside to close dropdown
+const handleClickOutside = (event) => {
+    if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
+        showProfileDropdown.value = false
     }
 }
 
-onMounted(() => {
-    document.addEventListener('click', closeDropdowns)
+// Lifecycle
+onMounted(async () => {
+    document.addEventListener('click', handleClickOutside)
+    // Fetch user data when component mounts
+    if (auth.isLoggedIn) {
+        console.log('Navbar: User is logged in, fetching user data...')
+        await auth.fetchUser()
+        console.log('Navbar: User data after fetch:', auth.user)
+    } else {
+        console.log('Navbar: User is not logged in')
+    }
 })
 
 onUnmounted(() => {
-    document.removeEventListener('click', closeDropdowns)
+    document.removeEventListener('click', handleClickOutside)
 })
 </script>
 
 <style scoped>
 .novia-navbar {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
@@ -154,32 +161,6 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     gap: 1rem;
-}
-
-/* Mobile Toggle */
-.mobile-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: #64748b;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 8px;
-    transition: all 0.2s;
-}
-
-.mobile-toggle:hover {
-    background: #f1f5f9;
-    color: #6366f1;
-}
-
-@media (max-width: 991px) {
-    .mobile-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
 }
 
 /* Brand */
@@ -266,20 +247,30 @@ onUnmounted(() => {
     text-decoration: none;
 }
 
-.action-btn:hover,
-.action-btn.active {
+.action-btn:hover {
     background: #f1f5f9;
     color: #6366f1;
     transform: translateY(-2px);
+}
+
+.notification-dot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background: #ef4444;
+    border-radius: 50%;
+    border: 2px solid white;
 }
 
 .badge {
     position: absolute;
     top: 6px;
     right: 6px;
-    width: 18px;
+    min-width: 18px;
     height: 18px;
-    background: #ef4444;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
     color: white;
     font-size: 0.7rem;
     font-weight: 700;
@@ -288,219 +279,128 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     border: 2px solid white;
+    padding: 0 4px;
 }
 
-.badge.pulse {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.1);
-    }
-}
-
-/* Profile */
-.profile-btn {
-    position: relative;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    padding: 2px;
-    background: none;
-    cursor: pointer;
-    margin-left: 0.5rem;
-    transition: all 0.2s;
-}
-
-.profile-btn:hover,
-.profile-btn.active {
-    border-color: #6366f1;
-}
-
-.profile-btn img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.status-indicator {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 12px;
-    height: 12px;
-    background: #10b981;
-    border: 2px solid white;
-    border-radius: 50%;
-}
-
-/* Dropdowns */
-.dropdown-container {
+/* User Profile Dropdown */
+.user-profile-dropdown {
     position: relative;
 }
 
-.dropdown-menu {
-    position: absolute;
-    top: calc(100% + 10px);
-    right: 0;
-    background: white;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    width: 280px;
-    overflow: hidden;
-    z-index: 1040;
-}
-
-.notifications-dropdown {
-    width: 320px;
-}
-
-.dropdown-header {
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid #f1f5f9;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.dropdown-header h6 {
-    margin: 0;
-    font-weight: 600;
-}
-
-.mark-read {
-    font-size: 0.8rem;
-    color: #6366f1;
-    text-decoration: none;
-}
-
-.notification-item {
+.user-profile {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.875rem 1.25rem;
-    text-decoration: none;
-    color: inherit;
-    border-bottom: 1px solid #f8fafc;
-    transition: background 0.2s;
-}
-
-.notification-item:hover {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
     background: #f8fafc;
+    transition: all 0.2s;
+    cursor: pointer;
 }
 
-.notif-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 0.9rem;
-}
-
-.notif-avatar.color-1 {
-    background: #ec4899;
-}
-
-.notif-avatar.color-2 {
-    background: #3b82f6;
-}
-
-.notif-avatar.color-3 {
-    background: #10b981;
-}
-
-.notif-content p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #475569;
-}
-
-.notif-content span {
-    font-size: 0.8rem;
-    color: #94a3b8;
-}
-
-/* Profile Dropdown */
-.profile-header {
-    padding: 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-}
-
-.header-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 3px solid white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.header-info h6 {
-    margin: 0;
-    font-weight: 700;
-    color: #1e293b;
-}
-
-.header-info span {
-    font-size: 0.85rem;
-    color: #64748b;
-}
-
-.dropdown-divider {
-    height: 1px;
+.user-profile:hover {
     background: #f1f5f9;
-    margin: 0.5rem 0;
+    transform: translateY(-1px);
+}
+
+.dropdown-icon {
+    font-size: 0.8rem;
+    color: #64748b;
+    transition: transform 0.2s;
+}
+
+.dropdown-icon.rotate {
+    transform: rotate(180deg);
+}
+
+.profile-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    z-index: 1050;
+    overflow: hidden;
 }
 
 .dropdown-item {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.875rem 1.25rem;
-    color: #475569;
+    padding: 0.75rem 1rem;
+    color: #374151;
     text-decoration: none;
+    font-size: 0.9rem;
     transition: all 0.2s;
-    font-size: 0.95rem;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
 }
 
 .dropdown-item:hover {
     background: #f8fafc;
     color: #6366f1;
-    padding-left: 1.5rem;
 }
 
-.dropdown-item.text-danger {
-    color: #ef4444;
+.dropdown-item i {
+    font-size: 1rem;
+    width: 18px;
 }
 
-.dropdown-item.text-danger:hover {
-    background: #fef2f2;
+.dropdown-divider {
+    margin: 0.5rem 0;
+    border: 0;
+    border-top: 1px solid #e5e7eb;
 }
 
-/* Transitions */
-.dropdown-enter-active,
-.dropdown-leave-active {
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-enter-from,
-.dropdown-leave-to {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.95);
+.user-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .search-container {
+        width: 200px;
+    }
+
+    .user-name {
+        display: none;
+    }
+
+    .profile-dropdown-menu {
+        min-width: 180px;
+        right: -10px;
+    }
+
+    .navbar-container {
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .search-container {
+        display: none;
+    }
+
+    .profile-dropdown-menu {
+        min-width: 160px;
+    }
 }
 </style>

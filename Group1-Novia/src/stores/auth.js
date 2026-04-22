@@ -115,4 +115,32 @@ export const useAuthStores = defineStore('auth', () => {
 
     return { user, token, isLoggedIn, Login, Logout, Register, ForgotPassword, VerifyOtp, Profile }
 
+  async function fetchUser() {
+    if (!token.value) return
+
+    try {
+      const res = await api.get('/api/profile')
+      if (res.data.result) {
+        user.value = res.data.data
+      }
+    } catch (error) {
+      console.error('Failed to fetch user data:', error)
+      // If token is invalid, clear it
+      token.value = null
+      localStorage.removeItem('token')
+    }
+  }
+
+  return {
+    user,
+    token,
+    isLoggedIn,
+    login,
+    logout,
+    register,
+    forgotPassword,
+    verifyOtp,
+    profile,
+    fetchUser,
+  }
 })
