@@ -238,5 +238,5 @@ async function handleLogin() {
   color: #ffbaba;
   font-size: 0.75rem;
   margin: 5px 0 0 15px;
-}
+ }
 </style>
