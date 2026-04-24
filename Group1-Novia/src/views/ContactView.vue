@@ -20,21 +20,21 @@
                 <div class="row g-3">
                   <div class="col-md-6">
                     <label class="form-label small fw-bold text-uppercase field-label">First Name</label>
-                    <input v-model="form.firstName" type="text" class="form-control form-control-lg" placeholder="Jane" />
+                    <input v-model="form.firstName" type="text" class="form-control" placeholder="Jane" />
                   </div>
                   <div class="col-md-6">
                     <label class="form-label small fw-bold text-uppercase field-label">Last Name</label>
-                    <input v-model="form.lastName" type="text" class="form-control form-control-lg" placeholder="Doe" />
+                    <input v-model="form.lastName" type="text" class="form-control" placeholder="Doe" />
                   </div>
 
                   <div class="col-12">
                     <label class="form-label small fw-bold text-uppercase field-label">Email Address</label>
-                    <input v-model="form.email" type="email" class="form-control form-control-lg" placeholder="jane@example.com" />
+                    <input v-model="form.email" type="email" class="form-control" placeholder="jane@example.com" />
                   </div>
 
                   <div class="col-12">
                     <label class="form-label small fw-bold text-uppercase field-label">Subject</label>
-                    <input v-model="form.subject" type="text" class="form-control form-control-lg" placeholder="How can we help?" />
+                    <input v-model="form.subject" type="text" class="form-control" placeholder="How can we help?" />
                   </div>
 
                   <div class="col-12">
@@ -82,7 +82,7 @@
                         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                       </svg>
                     </div>
-                    <div>
+                    <div> 
                       <h3 class="h6 fw-bold mb-1 sidebar-heading">Visit Us</h3>
                       <p class="small sidebar-muted mb-0">123 Innovation Drive</p>
                       <p class="small sidebar-muted mb-0">Tech City, TC 90210</p>
@@ -124,7 +124,7 @@
                 <!-- Social Links -->
                 <div class="info-card p-3">
                   <h3 class="h6 fw-bold mb-3 sidebar-heading">Follow Us</h3>
-                  <div class="d-flex gap-2 flex-wrap">
+                  <div class="d-flex gap-2 flex-wrap">  
                     <a href="#" class="social-btn d-flex align-items-center justify-content-center p-0 rounded-3" style="width: 45px; height: 45px;">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
@@ -233,7 +233,7 @@ const handleSubmit = async () => {
 .field-label {
   color: #4c1d95 !important;
   letter-spacing: .05em;
-  font-size: .72rem;
+  font-size: 14px;
 }
 
 /* Inputs */
@@ -310,7 +310,7 @@ const handleSubmit = async () => {
   height: 42px;
   border-radius: 10px;
   background: #ede9fe;
-  color: var(--v-d);
+  color: rgb(0, 0, 0);
   transition: transform .2s ease;
 }
 .info-card:hover .contact-icon {
