@@ -1,47 +1,74 @@
 <template>
-  <div>
+  <div
+    class="modal-backdrop"
+    :style="{
+      background: fullscreen ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.4)'
+    }"
+    @click.self="emit('closeModal')"
+  >
+
     <div
       class="modal d-block"
       tabindex="-1"
       aria-hidden="true"
-      :style="{ background: fullscreen ? 'rgba(0, 0, 0, 1)' : 'rgba(0, 0, 0, 0.3)' }"
-      @click.self="$emit('closeModal')"
     >
-      <div 
-        class="modal-dialog" 
-        :class="[fullscreen ? 'modal-fullscreen' : 'modal-dialog-centered']"
+      <div
+        class="modal-dialog"
+        :class="fullscreen ? 'modal-fullscreen' : 'modal-dialog-centered'"
       >
-        <div 
-          class="modal-content px-2" 
+
+        <div
+          class="modal-content px-2"
           :class="{ 'bg-black text-white border-0': fullscreen }"
         >
+
+          <!-- HEADER -->
           <div class="modal-header border-0">
-            <slot name="header"></slot>
+            <slot name="header" />
           </div>
 
+          <!-- BODY -->
           <div class="modal-body">
-            <slot name="body"></slot>
+            <slot name="body" />
           </div>
 
-          <div :class="`modal-footer border-0 d-flex ${position}`">
-            <slot name="footer"></slot>
+          <!-- FOOTER -->
+          <div class="modal-footer border-0 d-flex" :class="position">
+            <slot name="footer" />
           </div>
+
         </div>
+
       </div>
     </div>
+
   </div>
 </template>
 
-<script setup>
-defineProps({
+<script setup lang="ts">
+const props = defineProps({
   position: {
     type: String,
-    default: "",
+    default: ''
   },
   fullscreen: {
     type: Boolean,
-    default: false,
+    default: false
   }
-});
-defineEmits(["closeModal"]);
+})
+
+const emit = defineEmits<{
+  (e: 'closeModal'): void
+}>()
 </script>
+
+<style scoped>
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

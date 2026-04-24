@@ -13,9 +13,43 @@
 
             <!-- Center: Search -->
             <div class="navbar-section center">
-                <div class="search-container">
-                    <i class="bi bi-search search-icon"></i>
-                    <input type="text" placeholder="Search..." class="search-input">
+                <div class="search-wrapper" ref="searchRef">
+                    <div class="search-container">
+                        <i class="bi bi-search search-icon"></i>
+                        <input 
+                            type="text" 
+                            placeholder="Search users..." 
+                            class="search-input"
+                            v-model="searchQuery"
+                            @input="handleSearch"
+                            @focus="showSearchResults = true"
+                        >
+                    </div>
+                    
+                    <!-- Search Results Dropdown -->
+                    <div v-if="showSearchResults && (searchResults.length > 0 || isSearching)" class="search-results">
+                        <div v-if="isSearching" class="search-loading">
+                            <span class="spinner"></span> Searching...
+                        </div>
+                        <div v-else-if="searchResults.length > 0" class="results-list">
+                            <router-link 
+                                v-for="user in searchResults" 
+                                :key="user.id"
+                                :to="`/profile/${user.id}`"
+                                class="result-item"
+                                @click="clearSearch"
+                            >
+                                <img :src="user.avatar" :alt="user.full_name" class="result-avatar">
+                                <div class="result-info">
+                                    <p class="result-name">{{ user.full_name }}</p>
+                                    <p class="result-title">{{ user.professional_title || 'User' }}</p>
+                                </div>
+                            </router-link>
+                        </div>
+                        <div v-else class="no-results">
+                            No users found
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -72,6 +106,7 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStores } from '@/stores/auth'
+import api from '@/api/http'
 
 const router = useRouter()
 const auth = useAuthStores()
@@ -80,6 +115,12 @@ const auth = useAuthStores()
 const unreadMessages = ref(3)
 const showProfileDropdown = ref(false)
 const dropdownRef = ref(null)
+const searchRef = ref(null)
+const searchQuery = ref('')
+const searchResults = ref([])
+const showSearchResults = ref(false)
+const isSearching = ref(false)
+let searchTimeout = null
 
 // Computed properties for user data
 const userAvatar = computed(() => auth.user?.avatar || 'https://ui-avatars.com/api/?name=User&background=6366f1&color=fff')
@@ -109,10 +150,53 @@ const logout = () => {
     closeDropdown()
 }
 
+const handleSearch = async (e) => {
+    const query = e.target.value.trim()
+    
+    // Clear previous timeout
+    if (searchTimeout) clearTimeout(searchTimeout)
+    
+    if (!query) {
+        searchResults.value = []
+        showSearchResults.value = false
+        return
+    }
+    
+    // Debounce search request
+    searchTimeout = setTimeout(async () => {
+        try {
+            isSearching.value = true
+            const res = await api.get('/api/users/search', {
+                params: { q: query }
+            })
+            
+            if (res.data.result && res.data.data) {
+                searchResults.value = res.data.data
+            } else {
+                searchResults.value = []
+            }
+        } catch (error) {
+            console.error('Search error:', error)
+            searchResults.value = []
+        } finally {
+            isSearching.value = false
+        }
+    }, 500)
+}
+
+const clearSearch = () => {
+    searchQuery.value = ''
+    searchResults.value = []
+    showSearchResults.value = false
+}
+
 // Click outside to close dropdown
 const handleClickOutside = (event) => {
     if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
         showProfileDropdown.value = false
+    }
+    if (searchRef.value && !searchRef.value.contains(event.target)) {
+        showSearchResults.value = false
     }
 }
 
@@ -131,6 +215,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
     document.removeEventListener('click', handleClickOutside)
+    if (searchTimeout) clearTimeout(searchTimeout)
 })
 </script>
 
@@ -154,7 +239,9 @@ onUnmounted(() => {
     justify-content: space-between;
     height: 100%;
     padding: 0 1.5rem;
-    max-width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .navbar-section {
@@ -192,6 +279,11 @@ onUnmounted(() => {
 }
 
 /* Search */
+.search-wrapper {
+    position: relative;
+    width: 100%;
+}
+
 .search-container {
     position: relative;
     width: 300px;
@@ -221,6 +313,107 @@ onUnmounted(() => {
     background: white;
     border-color: #6366f1;
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+/* Search Results Dropdown */
+.search-results {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1060;
+}
+
+.results-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.result-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-item:hover {
+    background: #f8fafc;
+}
+
+.result-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.result-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.result-name {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1e293b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.result-title {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-loading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #e2e8f0;
+    border-top-color: #6366f1;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.no-results {
+    padding: 1rem;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.9rem;
 }
 
 /* Actions */
